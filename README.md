@@ -1,16 +1,17 @@
 # legal-scholarship-skills
 
-Claude Code skills for legal scholarship: verified citation placement and
+Claude Code and Codex skills for legal scholarship: verified citation placement and
 restyling (Bluebook, OSCOLA, Chicago, APA, McGill), article planning,
 document-driven literature discovery and screening, law-review manuscript
 workflows in Word and LaTeX, and document sourcing and delivery.
 
 Each skill is a self-contained folder that teaches
-[Claude Code](https://docs.anthropic.com/en/docs/claude-code) a workflow.
-Install the whole set as a plugin or copy individual skill folders — every
+[Claude Code](https://docs.anthropic.com/en/docs/claude-code) or
+[Codex](https://developers.openai.com/codex/) a workflow.
+Install the whole set in either agent or copy individual skill folders — every
 skill stands alone, with no cross-skill dependencies. A standalone Windows app
 in `tools/cite-restyle/` exposes the citation-restyle pipeline to colleagues
-who do not use Claude Code.
+who use neither Claude Code nor Codex.
 
 ## Contents
 
@@ -35,7 +36,7 @@ Legal scholarship has a distinctive production pipeline: the argument is
 carried substantially in footnotes, citation form is governed by demanding
 style manuals, and delivery runs through Word-centric law-review editorial
 processes even when the author drafts in LaTeX. The skills in this repository
-instrument that pipeline for Claude Code — from planning an article's
+instrument that pipeline for Claude Code and Codex — from planning an article's
 structure, through placing and restyling verified citations, to surviving
 rounds of editor redlines and delivering clean files in whatever format a
 journal demands.
@@ -105,9 +106,10 @@ references into BibTeX, plans where each citation belongs using parallel
 sub-agents, inserts the citations into a new copy of the manuscript, and
 compiles. The original file is never modified.
 
-**Activation:** manual only. Type `/cite-placement` inside Claude Code; the
-skill deliberately does not auto-trigger on general citation or footnote
-requests, so a placement run is always an explicit decision.
+**Activation:** manual only. Type `/cite-placement` in Claude Code, mention
+`$cite-placement` in Codex, or ask for the skill by name. It deliberately does
+not auto-trigger on general citation or footnote requests, so a placement run
+is always an explicit decision.
 
 Key capabilities:
 
@@ -185,9 +187,9 @@ Key capabilities:
   extend the chain where such a skill is installed, but that is an optional
   external extension and is not part of this repository.
 
-**Requirements:** Claude Code only, for planning. A LaTeX distribution
-compiles the drafted output; the Codex CLI is optional, for the cross-model
-red-team and conformance gates.
+**Requirements:** Claude Code or Codex for planning. A LaTeX distribution
+compiles the drafted output; the Codex CLI is optional for the red-team and
+conformance gates.
 
 **Example:** "Plan this paper — here is my abstract and the two tables I have
 computed so far."
@@ -298,9 +300,10 @@ any reference no index can confirm is dropped to a separate audit file, which
 removes the fabricated-citation failure mode that language-model literature
 search would otherwise introduce.
 
-**Activation:** manual-invoke only. Type `/lit-review-orchestrator` or ask for
-it by name; the skill deliberately does not auto-trigger on general
-literature-review requests, so a search run is always an explicit decision.
+**Activation:** manual-invoke only. Type `/lit-review-orchestrator` in Claude
+Code, mention `$lit-review-orchestrator` in Codex, or ask for it by name; the
+skill deliberately does not auto-trigger on general literature-review
+requests, so a search run is always an explicit decision.
 
 Key capabilities:
 
@@ -447,7 +450,8 @@ then extracts the article's text with its footnotes inlined where they belong.
 ## The standalone citation-restyle app
 
 `tools/cite-restyle/` contains the source of a standalone Windows app exposing
-`cite-placement`'s restyle pipeline to colleagues who do not use Claude Code:
+`cite-placement`'s restyle pipeline to colleagues who use neither Claude Code
+nor Codex:
 select a manuscript, choose the current and target styles, and run. The app is
 built from this source with PyInstaller using the bundled `.spec` file.
 
@@ -458,14 +462,35 @@ it, is documented in the tool's own README.
 
 ## Installation
 
-### Option A — Claude Code plugin (recommended)
+### Claude Code plugin
 
 ```
 /plugin marketplace add kennethkhoocy/legal-scholarship-skills
 /plugin install legal-scholarship@legal-scholarship-skills
 ```
 
-### Option B — manual
+### Codex
+
+Clone the repository, then copy its skill folders into Codex's user
+skill directory:
+
+```bash
+git clone https://github.com/kennethkhoocy/legal-scholarship-skills
+mkdir -p ~/.agents/skills
+cp -R legal-scholarship-skills/plugins/legal-scholarship/skills/. ~/.agents/skills/
+```
+
+On Windows PowerShell, replace the last two commands with:
+
+```powershell
+New-Item -ItemType Directory -Force "$HOME\.agents\skills"
+Copy-Item -Recurse -Force "legal-scholarship-skills\plugins\legal-scholarship\skills\*" "$HOME\.agents\skills\"
+```
+
+Codex also supports symlinked skill folders. If a per-skill example uses
+`~/.claude/skills/`, substitute `~/.agents/skills/` when running it in Codex.
+
+### Manual Claude Code install
 
 ```
 git clone https://github.com/kennethkhoocy/legal-scholarship-skills
@@ -476,15 +501,15 @@ git clone https://github.com/kennethkhoocy/legal-scholarship-skills
 
 Six of the eight skills trigger automatically when a task matches their
 description; the per-skill sections above state each trigger. `cite-placement`
-and `lit-review-orchestrator` are the exceptions — invoke them explicitly with
-`/cite-placement` and `/lit-review-orchestrator`, a deliberate design choice so
+and `lit-review-orchestrator` are the exceptions — use `/skill-name` in Claude
+Code or mention `$skill-name` in Codex. This is a deliberate design choice so
 that citation placement and literature searches never happen as a side effect.
 
 ## Requirements
 
-Every skill runs inside Claude Code; the table lists what else each one needs.
-Entries marked *optional* enable a specific capability and can be skipped
-otherwise.
+Every skill runs inside Claude Code or Codex; the table lists what else each
+one needs. Entries marked *optional* enable a specific capability and can be
+skipped otherwise.
 
 | Skill | Python packages | External tools | Optional |
 |---|---|---|---|
