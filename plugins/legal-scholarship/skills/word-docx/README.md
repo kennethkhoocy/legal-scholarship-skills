@@ -19,6 +19,9 @@ changed in place.
 
 ## Install
 
+Copy the `word-docx` folder to `~/.claude/skills/word-docx/` for Claude Code or
+`~/.agents/skills/word-docx/` for Codex, then install its Python dependencies:
+
 ```bash
 pip install -r requirements.txt
 ```
@@ -27,6 +30,10 @@ The Python-native commands — `inspect`, `extract-comments`, `extract-revisions
 `extract-text`, `apply-edits`, `apply-tracked-edits`, `apply-non-tracked-edits`,
 `render-pdf`, `audit-ooxml`, and the python-routed half of `build` — run with no
 further setup.
+
+Restart the host or start a new session so it discovers the skill. It
+auto-activates for Word-document tasks; explicit invocation is `/word-docx` in
+Claude Code or `$word-docx` in Codex.
 
 ### Optional backends
 

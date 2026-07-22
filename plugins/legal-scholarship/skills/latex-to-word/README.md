@@ -1,7 +1,7 @@
 # latex-to-word
 
-A Claude Code skill that converts academic manuscripts between LaTeX and
-Microsoft Word in both directions, and assembles a single `.tex` from mixed
+A Claude Code and Codex skill that converts academic manuscripts between LaTeX
+and Microsoft Word in both directions, and assembles a single `.tex` from mixed
 sources. It supersedes several earlier single-purpose converters, folding their
 capabilities into one skill with three workflows.
 
@@ -45,24 +45,27 @@ a generator that produces LaTeX.
   rendered to PDF and rasterized for a visual sanity check.
 - **The document's body font** installed on the system, so Word or LibreOffice
   can render it faithfully.
-- **Claude Code**, which discovers and runs the skill.
+- **Claude Code or Codex**, which discover and run the skill.
 
 ## Installation
 
-Copy the `latex-to-word` folder into your Claude Code skills directory:
+Copy the `latex-to-word` folder into your host's user skills directory:
 
-- Windows: `%USERPROFILE%\.claude\skills\latex-to-word\`
-- macOS / Linux: `~/.claude/skills/latex-to-word/`
+- Claude Code: `~/.claude/skills/latex-to-word/` (Windows:
+  `%USERPROFILE%\.claude\skills\latex-to-word\`)
+- Codex: `~/.agents/skills/latex-to-word/` (Windows:
+  `%USERPROFILE%\.agents\skills\latex-to-word\`)
 
 The folder should contain `SKILL.md`, `scripts/`, `references/`, and `gui.py` at
-the top level. No further configuration is needed — Claude Code discovers skills
-automatically. All commands below assume the skill lives at
-`~/.claude/skills/latex-to-word/`; adjust the path for your platform.
+the top level. Restart the host or start a new session after installing it.
+Invoke the skill with `/latex-to-word` in Claude Code or `$latex-to-word` in
+Codex. Commands below that use `~/.claude/skills/` should use
+`~/.agents/skills/` instead when the skill is installed for Codex.
 
 ## Workflow A — round-trip (`.docx → .tex → .docx`)
 
-Convert a Word manuscript to LaTeX for editing (in Claude Code or by hand), then
-convert it back to Word, preserving footnotes throughout. The `tex → docx` step
+Convert a Word manuscript to LaTeX for editing (in Claude Code, Codex, or by
+hand), then convert it back to Word, preserving footnotes throughout. The `tex → docx` step
 is plain pandoc plus a style-templated `scripts/reference.docx`, so it is fast
 and formatting-only; it does not build native tables or resolve cross-references.
 
@@ -189,11 +192,13 @@ fixtures — the corpus is the ground truth.
 - Author placeholders and `\input` of external content that is neither a table
   nor a figure pass through as-is.
 
-## Caution: `gui.py` bypasses permission prompts
+## Caution: `gui.py` launches Claude Code without permission prompts
 
-The workflow A GUI (`gui.py`) invokes the Claude Code CLI with
+The workflow A GUI (`gui.py`) specifically invokes the Claude Code CLI with
 `--dangerously-skip-permissions` for its auto-edit and automatic XeLaTeX-error
 repair loops. On that path, any tool call Claude makes runs without the usual
 confirmation. Review `gui.py` and understand what the auto loops can do before
-enabling that feature. The command-line scripts (`scripts/convert.py`,
+enabling that feature. This optional GUI automation is Claude Code-specific;
+the skill's direct conversion workflows and command-line scripts work from
+either host. The command-line scripts (`scripts/convert.py`,
 `scripts/docx_to_tex.py`, `scripts/tex_to_docx.py`) do not bypass permissions.

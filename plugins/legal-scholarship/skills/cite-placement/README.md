@@ -1,8 +1,8 @@
 # cite-placement
 
-A Claude Code skill that places pre-screened literature citations into a LaTeX
-or Word manuscript, or restyles the citations already in one. A single Tkinter
-launcher selects the mode and its options.
+A Claude Code and Codex skill that places pre-screened literature citations into
+a LaTeX or Word manuscript, or restyles the citations already in one. A single
+Tkinter launcher selects the mode and its options.
 
 ## Citation integrity — no fabricated references
 
@@ -59,7 +59,8 @@ and compiles.
   `requirements-docx.txt`). `.tex`-only usage needs no extra dependencies.
 - A LaTeX distribution: `pdflatex` + `bibtex`/`biber` for inline mode; `xelatex`
   for footnote and restyle modes.
-- Claude Code, invoked via `/cite-placement`.
+- Claude Code, invoked via `/cite-placement`, or Codex, invoked via
+  `$cite-placement` (or by naming the skill).
 - `SEARCHAPI_API_KEY` in the environment to enable optional Google Scholar
   verification (Phase 1.5). Without it, verification falls back to OpenAlex and
   CrossRef only.
@@ -98,36 +99,40 @@ cite-placement/
 This quick start walks through a restyle run — the most common colleague task.
 Placement runs follow the same launch flow with a different run button.
 
-### 1 — Install Claude Code
+### 1 — Install an agent host
+
+Use an authenticated Claude Code or Codex installation. For Claude Code:
 
 ```
 npm install -g @anthropic-ai/claude-code
 ```
 
 Run `claude` in your terminal to verify it works. You will need an Anthropic
-account or an organisation seat.
+account or an organisation seat. If you use Codex, verify that your Codex client
+is installed and authenticated instead.
 
 ### 2 — Install the skill
 
-Copy the `cite-placement` folder to your Claude Code skills directory:
+Copy the `cite-placement` folder to your host's user skills directory:
 
-- Windows: `%USERPROFILE%\.claude\skills\cite-placement\`
-- macOS: `~/.claude/skills/cite-placement/`
-- Linux: `~/.claude/skills/cite-placement/`
+- Claude Code: `~/.claude/skills/cite-placement/` (Windows:
+  `%USERPROFILE%\.claude\skills\cite-placement\`)
+- Codex: `~/.agents/skills/cite-placement/` (Windows:
+  `%USERPROFILE%\.agents\skills\cite-placement\`)
 
 The folder should contain `SKILL.md`, `scripts/`, and `references/` at the top
-level. No further configuration is needed — Claude Code discovers skills
-automatically.
+level. Restart the host or start a new session after installing it.
 
 ### 3 — Launch the GUI
 
-Open a terminal, run `claude`, and type:
+Open your host and invoke the skill:
 
-```
-/cite-placement
+```text
+/cite-placement    # Claude Code
+$cite-placement    # Codex
 ```
 
-Claude Code launches a Tkinter GUI window. If it doesn't appear, make sure
+The host launches a Tkinter GUI window. If it doesn't appear, make sure
 Python's tkinter is installed (it ships with most Python distributions).
 
 ### 4 — Configure the restyle
@@ -143,14 +148,14 @@ In the GUI:
 
 The `.xlsx` field is for placement only; leave it empty when restyling.
 
-### 5 — Claude Code runs the pipeline
+### 5 — The host runs the pipeline
 
-After the GUI closes, Claude Code automatically:
+After the GUI closes, Claude Code or Codex automatically:
 
 1. Copies your manuscript to the output path (never modifies the original).
 2. Extracts all footnotes.
-3. Reformats each footnote from the current style to the target style — Claude
-   Code itself does the reformatting.
+3. Reformats each footnote from the current style to the target style — the
+   host agent itself does the reformatting.
 4. Writes the restyled footnotes back into the output file.
 5. Reports how many footnotes were converted, skipped, and any errors.
 
@@ -240,7 +245,7 @@ verification.
 
 ## Standalone .exe (tools/cite-restyle)
 
-For colleagues without a Python or Claude Code setup, the restyle workflow is
+For colleagues without a Python or agent-host setup, the restyle workflow is
 also packaged as a standalone Windows executable built from the source in
 `tools/cite-restyle/` using its bundled PyInstaller `.spec`. The `.exe` is
 distributed **only** as a GitHub Release asset and is never committed to the
@@ -257,8 +262,10 @@ run it and which styles it supports. To rebuild, run PyInstaller against the
 - **"Permission denied" on the output file.** The output file may be open in
   Word, or it lives in a Dropbox- or OneDrive-synced folder that has locked it.
   Close Word and/or write to a local directory.
-- **Claude Code doesn't recognise `/cite-placement`.** Check the skill is in the
-  correct directory with `SKILL.md` at the top level, then restart Claude Code.
+- **The host doesn't recognise the skill.** Check the folder is under
+  `~/.claude/skills/` for Claude Code or `~/.agents/skills/` for Codex with
+  `SKILL.md` at the top level, then restart the host. Invoke it as
+  `/cite-placement` in Claude Code or `$cite-placement` in Codex.
 - **Some footnotes weren't converted.** Discursive footnotes, case citations,
   and legislation are intentionally skipped — check the changelog for details.
 - **Undefined citation warnings (inline mode).** Check `.bib` key spelling and

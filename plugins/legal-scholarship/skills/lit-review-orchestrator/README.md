@@ -147,8 +147,9 @@ git clone https://github.com/kennethkhoocy/lit-review-orchestrator.git ~/.claude
 pip install -r ~/.claude/skills/lit-review-orchestrator/requirements.txt
 cp ~/.claude/skills/lit-review-orchestrator/lit-review-pipeline.env.example ~/.lit-review-pipeline.env
 ```
-Then ask Claude Code for a literature review (or hand it a manuscript): the skill triggers,
-the settings dialog opens, and the agent-driven pipeline runs from your choices.
+Then invoke `/lit-review-orchestrator` in Claude Code (or ask for the skill by
+name) and provide a manuscript or literature-review request. The settings dialog
+opens, and the agent-driven pipeline runs from your choices.
 
 ### Codex skill
 

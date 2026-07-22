@@ -18,12 +18,17 @@ rejects a freshly downloaded file because it is actually a challenge page.
 - A scraper can parse the PDF to text but you need the original binary file on
   disk (for example, to keep a reference copy).
 
-## How it triggers in Claude Code
+## Installation and activation
 
-This is an auto-activating knowledge skill. Claude Code loads it when a task
-matches the symptoms above — a `.pdf` URL that yields HTML, or a PDF-header error
-on a supposedly downloaded file. There is nothing to install; the skill provides
-the retrieval recipe and the verification step.
+Copy the `download-gated-pdfs` folder to `~/.claude/skills/` for Claude Code or
+`~/.agents/skills/` for Codex, then restart the host or start a new session.
+
+This is an auto-activating knowledge skill. Claude Code or Codex loads it when
+a task matches the symptoms above — a `.pdf` URL that yields HTML, or a
+PDF-header error on a supposedly downloaded file. You can also invoke it explicitly with
+`/download-gated-pdfs` in Claude Code or `$download-gated-pdfs` in Codex. There
+is no further configuration; the skill provides the retrieval recipe and the
+verification step.
 
 ## The technique
 

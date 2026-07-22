@@ -1,12 +1,12 @@
 # writing-article-plans
 
-A Claude Code skill that turns a research idea into a detailed, task-decomposed
-`.md` plan for an academic article, which a separate drafter agent then writes
-section by section in LaTeX. It is the academic-writing counterpart of a
-design-then-build workflow: the skill interviews the author to settle intent,
-gets approval on a section skeleton, and only then expands that skeleton into a
-plan concrete enough that a drafter with no prior context can realize each
-argument move as a paragraph.
+A Claude Code and Codex skill that turns a research idea into a detailed,
+task-decomposed `.md` plan for an academic article, which a separate drafter
+agent then writes section by section in LaTeX. It is the academic-writing
+counterpart of a design-then-build workflow: the skill interviews the author
+to settle intent, gets approval on a section skeleton, and only then expands
+that skeleton into a plan concrete enough that a drafter with no prior context
+can realize each argument move as a paragraph.
 
 The plan carries the whole argument down to individual moves, so the manuscript
 that follows realizes a decided argument rather than improvising one. Structure
@@ -171,8 +171,8 @@ working source that revision-mode anchors point at.
 
 ## Requirements
 
-- **Claude Code**, which supplies the skill runtime, the interview tooling, and
-  the drafter subagents.
+- **Claude Code or Codex**, which supplies the skill runtime, interview tooling,
+  and drafter agents.
 - **Codex CLI** *(optional)* — enables the cross-model plan red-team gate;
   without it, that gate is skipped.
 - **`word-docx` skill** *(optional)* — needed only to plan from a `.docx` input.
@@ -184,11 +184,18 @@ working source that revision-mode anchors point at.
 
 ## Invocation
 
-Ask Claude Code to plan, outline, structure, or scaffold a paper before drafting
+Copy the `writing-article-plans` folder to
+`~/.claude/skills/writing-article-plans/` for Claude Code or
+`~/.agents/skills/writing-article-plans/` for Codex, then restart the host or
+start a new session.
+
+Ask either host to plan, outline, structure, or scaffold a paper before drafting
 — for example, "write a plan for this article," "give me a paper outline to draft
-from," or "plan this paper." To restructure or substantively revise an existing
-draft, ask for that explicitly ("revise / restructure this draft") so the skill
-enters revision mode. The skill announces itself when it begins.
+from," or "plan this paper." You can also invoke `/writing-article-plans` in
+Claude Code or `$writing-article-plans` in Codex. To restructure or substantively
+revise an existing draft, ask for that explicitly ("revise / restructure this
+draft") so the skill enters revision mode. The skill announces itself when it
+begins.
 
 ## Responsible use
 
