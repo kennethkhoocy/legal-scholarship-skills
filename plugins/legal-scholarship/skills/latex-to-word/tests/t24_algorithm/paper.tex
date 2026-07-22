@@ -1,0 +1,62 @@
+\documentclass[11pt]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage[ruled,vlined,linesnumbered]{algorithm2e}
+\usepackage[colorlinks=true,linkcolor=blue,citecolor=blue,urlcolor=blue]{hyperref}
+\usepackage[nameinlink,noabbrev]{cleveref}
+
+\SetKwInput{KwData}{Data}
+\SetKwInput{KwResult}{Result}
+\SetKwComment{Comment}{$\triangleright$\ }{}
+\crefname{algocf}{algorithm}{algorithms}
+\Crefname{algocf}{Algorithm}{Algorithms}
+
+\title{Algorithm Float Conversion Stress Paper}
+\author{Stage Two Corpus}
+\date{}
+
+\begin{document}
+\maketitle
+
+\section{Overview}
+
+Algorithm environments often combine captions, line numbers, mathematical symbols, nested control flow, and cross-references. This fixture places pseudocode in a ruled float so that a converter must preserve both the program-like layout and the surrounding scholarly reference structure.
+
+The screening procedure in \cref{alg:adaptive-screen} computes a risk score for each candidate, updates a calibration term, and records the first threshold crossing. The surrounding prose uses the algorithm as a numbered scholarly object rather than as plain code.
+
+\begin{algorithm}[tbp]
+\DontPrintSemicolon
+\caption{Adaptive screen with calibrated stopping}
+\label{alg:adaptive-screen}
+\KwData{Candidate set $\mathcal{J}$, features $x_j$, threshold $\tau$, and maximum rounds $T$}
+\KwResult{Accepted set $A$ and audit log $L$}
+$A \leftarrow \varnothing$; $L \leftarrow [\,]$; $\lambda \leftarrow 0$\;
+\For{$t \leftarrow 1$ \KwTo $T$}{
+  $B_t \leftarrow \varnothing$\;
+  \ForEach{$j \in \mathcal{J} \setminus A$}{
+    $s_j \leftarrow w_t^{\top}x_j - \lambda$\;
+    \uIf{$s_j \geq \tau$}{
+      $A \leftarrow A \cup \{j\}$\;
+      append $(t,j,s_j,\mathrm{accept})$ to $L$\;
+    }
+    \ElseIf{$\tau - s_j \leq 0.05$}{
+      $B_t \leftarrow B_t \cup \{j\}$\;
+      append $(t,j,s_j,\mathrm{borderline})$ to $L$\;
+    }
+  }
+  $\lambda \leftarrow \lambda + |B_t|/(1+|\mathcal{J}|)$\Comment*[r]{calibrate future rounds}
+  \If{$B_t=\varnothing$ \KwSty{and} $A \neq \varnothing$}{
+    \KwRet{$(A,L)$}\;
+  }
+}
+\KwRet{$(A,L)$}\;
+\end{algorithm}
+
+\section{Interpretation}
+
+The most important structural feature of \cref{alg:adaptive-screen} is the coexistence of mathematical notation and algorithmic indentation. When the float is converted, the line-number gutter, comments, and return statements need stable alignment because readers use them to distinguish the scoring rule from the stopping condition.
+
+\end{document}

@@ -1,0 +1,44 @@
+\documentclass[11pt]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage{booktabs}
+\usepackage{tabularx}
+\usepackage{multirow}
+\usepackage{makecell}
+\usepackage{array}
+
+\title{Tabularx Multirow Stress Case}
+\author{Test Corpus}
+\date{}
+
+\begin{document}
+\maketitle
+
+This test combines expandable columns with row spans and explicit line breaks
+inside cells. The table is useful for identifying parsers that assume fixed-width
+tabular environments or single-line cell content.
+
+\begin{table}[htbp]
+\centering
+\caption{Program features by implementation phase}
+\label{tab:tabularx}
+\begin{tabularx}{\linewidth}{ll>{\raggedright\arraybackslash}X>{\centering\arraybackslash}p{0.16\linewidth}}
+\toprule
+Phase & Component & Implementation detail & Status \\
+\midrule
+\multirow{3}{*}{Design}
+  & Eligibility & \makecell[l]{Sites define local thresholds\\using the shared protocol.} & Complete \\
+  & Intake & Intake forms include a short baseline screen and a referral checklist. & Complete \\
+  & Training & Supervisors receive a facilitation guide with worked examples. & Active \\
+\midrule
+\multirow{2}{*}{Delivery}
+  & Monitoring & Teams submit weekly notes describing deviations from the planned sequence. & Active \\
+  & Escalation & \makecell[l]{Cases crossing risk thresholds\\move to senior review.} & Pilot \\
+\midrule
+\multirow{2}{*}{Review}
+  & Audit & Reviewers reconcile the service log with appointment records. & Pending \\
+  & Feedback & Sites receive annotated summaries before the next reporting cycle. & Pending \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\end{document}

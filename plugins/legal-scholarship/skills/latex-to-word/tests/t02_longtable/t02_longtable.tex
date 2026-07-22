@@ -1,0 +1,117 @@
+\documentclass[11pt]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage{booktabs}
+\usepackage{longtable}
+\usepackage{array}
+
+\title{Longtable Multipage Stress Case}
+\author{Test Corpus}
+\date{}
+
+\begin{document}
+\maketitle
+
+This file contains a longtable intended to span more than one page. The repeated
+header and footer exercise pagination behavior that ordinary table floats do not
+cover.
+
+\renewcommand{\arraystretch}{1.12}
+\begin{longtable}{>{\raggedright\arraybackslash}p{0.18\linewidth}%
+                  >{\raggedright\arraybackslash}p{0.30\linewidth}%
+                  r r}
+\caption{Quarterly site metrics across many rows}
+\label{tab:longtable}\\
+\toprule
+Site & Description & Score & Cases \\
+\midrule
+\endfirsthead
+\multicolumn{4}{l}{\textit{Table \thetable{} continued from previous page}}\\
+\toprule
+Site & Description & Score & Cases \\
+\midrule
+\endhead
+\midrule
+\multicolumn{4}{r}{\textit{Continued on next page}}\\
+\endfoot
+\bottomrule
+\endlastfoot
+\multicolumn{4}{l}{Panel A: Early cohorts}\\
+Alpha 01 & Urban clinic with stable intake & 0.71 & 142\\
+Alpha 02 & Regional office with seasonal demand & 0.65 & 118\\
+Alpha 03 & Field unit serving mixed catchments & 0.69 & 124\\
+Alpha 04 & Hospital desk with referral traffic & 0.74 & 151\\
+Alpha 05 & Mobile team with weekly rotation & 0.63 & 109\\
+Alpha 06 & Community site with high continuity & 0.78 & 163\\
+Alpha 07 & Intake center with shared staffing & 0.61 & 104\\
+Alpha 08 & Neighborhood hub with evening hours & 0.72 & 137\\
+Alpha 09 & Rural post with intermittent supply & 0.57 & 96\\
+Alpha 10 & Regional desk with bilingual staff & 0.76 & 155\\
+Alpha 11 & University clinic with triage support & 0.68 & 126\\
+Alpha 12 & Satellite site with low turnover & 0.73 & 148\\
+Alpha 13 & District center with daily reporting & 0.66 & 120\\
+Alpha 14 & Field office with transport barriers & 0.58 & 93\\
+Alpha 15 & Referral desk with complex caseloads & 0.70 & 132\\
+Alpha 16 & Urban post with walk-in services & 0.75 & 149\\
+Alpha 17 & Community hub with volunteer intake & 0.62 & 111\\
+Alpha 18 & Regional office with high follow-up & 0.77 & 158\\
+Alpha 19 & Rural clinic with weekend coverage & 0.64 & 116\\
+Alpha 20 & Hospital desk with digital records & 0.79 & 168\\
+Alpha 21 & Mobile team with daily supervision & 0.67 & 127\\
+Alpha 22 & Neighborhood clinic with stable hours & 0.73 & 145\\
+Alpha 23 & District unit with mixed referrals & 0.60 & 101\\
+Alpha 24 & Community site with outreach visits & 0.72 & 139\\
+Alpha 25 & Intake center with manual records & 0.55 & 87\\
+Alpha 26 & Regional hub with centralized review & 0.80 & 174\\
+Alpha 27 & Satellite clinic with short visits & 0.59 & 99\\
+Alpha 28 & University desk with peer navigation & 0.74 & 152\\
+Alpha 29 & Rural post with new supervision & 0.63 & 108\\
+Alpha 30 & Hospital desk with weekend intake & 0.76 & 159\\
+\multicolumn{4}{l}{Panel B: Later cohorts}\\
+Beta 31 & Urban clinic with expanded intake & 0.82 & 181\\
+Beta 32 & Regional office with stable demand & 0.75 & 146\\
+Beta 33 & Field unit serving remote catchments & 0.69 & 119\\
+Beta 34 & Hospital desk with referral protocols & 0.84 & 188\\
+Beta 35 & Mobile team with fortnight rotation & 0.66 & 115\\
+Beta 36 & Community site with strong continuity & 0.81 & 177\\
+Beta 37 & Intake center with shared review & 0.70 & 129\\
+Beta 38 & Neighborhood hub with weekend hours & 0.78 & 161\\
+Beta 39 & Rural post with steady supply & 0.67 & 122\\
+Beta 40 & Regional desk with new training & 0.79 & 166\\
+Beta 41 & University clinic with evening triage & 0.73 & 141\\
+Beta 42 & Satellite site with added staff & 0.77 & 154\\
+Beta 43 & District center with weekly reporting & 0.71 & 136\\
+Beta 44 & Field office with transport vouchers & 0.68 & 125\\
+Beta 45 & Referral desk with specialist review & 0.83 & 185\\
+Beta 46 & Urban post with scheduled visits & 0.80 & 170\\
+Beta 47 & Community hub with digital intake & 0.72 & 138\\
+Beta 48 & Regional office with active follow-up & 0.85 & 193\\
+Beta 49 & Rural clinic with evening coverage & 0.69 & 128\\
+Beta 50 & Hospital desk with shared records & 0.86 & 201\\
+Beta 51 & Mobile team with supervisor calls & 0.74 & 150\\
+Beta 52 & Neighborhood clinic with extended hours & 0.78 & 163\\
+Beta 53 & District unit with referral review & 0.71 & 133\\
+Beta 54 & Community site with home visits & 0.79 & 169\\
+Beta 55 & Intake center with digital records & 0.70 & 131\\
+Beta 56 & Regional hub with case conferences & 0.87 & 208\\
+Beta 57 & Satellite clinic with longer visits & 0.73 & 144\\
+Beta 58 & University desk with navigator calls & 0.81 & 176\\
+Beta 59 & Rural post with supervision visits & 0.72 & 140\\
+Beta 60 & Hospital desk with rapid intake & 0.85 & 196\\
+Beta 61 & Urban clinic with new outreach & 0.83 & 184\\
+Beta 62 & Regional office with queue review & 0.76 & 153\\
+Beta 63 & Field unit with remote follow-up & 0.70 & 134\\
+Beta 64 & Hospital desk with care planning & 0.84 & 189\\
+Beta 65 & Mobile team with shared scheduling & 0.68 & 123\\
+Beta 66 & Community site with appointment calls & 0.82 & 180\\
+Beta 67 & Intake center with reminder calls & 0.73 & 142\\
+Beta 68 & Neighborhood hub with added rooms & 0.79 & 165\\
+Beta 69 & Rural post with transport support & 0.70 & 130\\
+Beta 70 & Regional desk with daily huddles & 0.81 & 173\\
+Beta 71 & University clinic with documentation aid & 0.74 & 147\\
+Beta 72 & Satellite site with referral tracking & 0.78 & 157\\
+Beta 73 & District center with case review & 0.72 & 139\\
+Beta 74 & Field office with phone outreach & 0.69 & 126\\
+Beta 75 & Referral desk with triage nurse & 0.84 & 191\\
+\end{longtable}
+
+\end{document}

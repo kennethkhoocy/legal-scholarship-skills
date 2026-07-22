@@ -1,0 +1,125 @@
+\documentclass[11pt]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{amsmath}
+\usepackage{booktabs}
+\usepackage{siunitx}
+\usepackage[nameinlink]{cleveref}
+
+\sisetup{
+  uncertainty-mode = separate,
+  table-number-alignment = center,
+  detect-weight = true,
+  detect-family = true
+}
+
+\title{Decimal Alignment, Units, and Uncertainties with siunitx}
+\author{Test Corpus}
+\date{}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+This fixture exercises the \texttt{siunitx} \texttt{S} column type for decimal
+alignment, the rendering of physical quantities with units, and the typesetting
+of measurement uncertainties in compact parenthetical notation. The numerical
+content is drawn from an illustrative calibration experiment so that a
+text-difference comparison of the converted output remains meaningful.
+\end{abstract}
+
+\section{Introduction}
+\label{sec:introduction}
+
+Quantitative tables in the physical sciences depend on alignment of numbers on
+the decimal marker, on consistent presentation of units, and on a clear
+convention for reporting uncertainty. The \texttt{siunitx} package provides the
+\texttt{S} column type, which parses each numeric entry and aligns the integer
+and fractional parts independently of the surrounding text. A representative
+acceleration due to gravity is \SI{9.81}{\meter\per\second\squared}, and a
+representative reference mass is written with a standalone unit such as
+\si{\kilogram}. Large quantities are handled in scientific form, as in the
+Avogadro constant \num{6.022e23}.
+
+\Cref{tab:calibration} reports the calibration measurements. Each row records a
+specimen identifier, a measured length whose values align on the decimal in an
+\texttt{S} column with format \texttt{2.3}, a measured mass reported together
+with its standard uncertainty in the compact form \texttt{1.2(2)}, and a
+dimensionless transmission ratio. The mass column demonstrates the
+separate-uncertainty rendering, so that an entry such as 1.23(4) is displayed
+with the uncertainty digits attached to the final significant figures of the
+value.
+
+\section{Calibration Results}
+\label{sec:results}
+
+The measured masses in \cref{tab:calibration} cluster near \tablenum{1.20}
+units, and the largest reported transmission ratio is \tablenum{0.98}. Because
+the column specification fixes the displayed precision, every value in the mass
+column carries an explicit uncertainty in parentheses, while the length column
+is aligned to three fractional digits regardless of the magnitude of the
+integer part.
+
+\begin{table}[htbp]
+\centering
+\caption{Calibration measurements with decimal-aligned \texttt{S} columns,
+units in the headers, and parenthetical uncertainties.}
+\label{tab:calibration}
+\begin{tabular}{l S[table-format=2.3] S[table-format=1.2(2)] S[table-format=1.3]}
+\toprule
+{Specimen}
+  & \multicolumn{1}{c}{Length (\si{\milli\meter})}
+  & \multicolumn{1}{c}{Mass (\si{\gram})}
+  & \multicolumn{1}{c}{Transmission} \\
+\midrule
+Specimen A & 12.340 & 1.23(4) & 0.812 \\
+Specimen B &  8.072 & 0.97(3) & 1.104 \\
+Specimen C & 15.806 & 1.41(5) & 0.944 \\
+Specimen D &  9.250 & 1.05(2) & 1.037 \\
+Specimen E & 11.604 & 1.19(6) & 0.998 \\
+\midrule
+{Mean}     & 11.414 & 1.17(4) & 0.979 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\Cref{tab:constants} collects the physical constants used to normalize the
+measurements. The values are written with \verb|\num| and the units with
+\verb|\si|, so the table mixes scientific notation, ordinary decimals, and
+compound unit expressions within decimal-aligned columns.
+
+\begin{table}[htbp]
+\centering
+\caption{Reference constants entered through \texttt{siunitx} number and unit
+macros.}
+\label{tab:constants}
+\begin{tabular}{l S[table-format=1.3e2] l}
+\toprule
+{Quantity}
+  & \multicolumn{1}{c}{Value}
+  & {Unit} \\
+\midrule
+Avogadro constant      & 6.022e23  & \si{\per\mole} \\
+Elementary charge      & 1.602e-19 & \si{\coulomb} \\
+Boltzmann constant     & 1.381e-23 & \si{\joule\per\kelvin} \\
+Standard gravity       & 9.807e0   & \si{\meter\per\second\squared} \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\section{Discussion}
+\label{sec:discussion}
+
+The combination tested here is common in laboratory reports: numbers aligned on
+the decimal marker through the \texttt{S} column, units rendered consistently
+with \si{\kilogram} and compound forms such as
+\SI{9.81}{\meter\per\second\squared}, and uncertainties attached to the final
+digits of a value as in 1.23(4). Headers over \texttt{S} columns are wrapped in
+\verb|\multicolumn{1}{c}{...}| because the column type otherwise attempts to
+parse the header text as a number. The fixture therefore checks whether a
+converter preserves decimal alignment, unit formatting, and the parenthetical
+uncertainty convention together, as referenced in \cref{tab:calibration} and
+\cref{tab:constants}.
+
+\end{document}

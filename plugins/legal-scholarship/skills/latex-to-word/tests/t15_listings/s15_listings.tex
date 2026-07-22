@@ -1,0 +1,78 @@
+\documentclass[11pt]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage{xcolor}
+\usepackage{listings}
+\usepackage{booktabs}
+
+\lstset{
+  basicstyle=\ttfamily\small,
+  keywordstyle=\bfseries\color{blue!60!black},
+  commentstyle=\itshape\color{gray!70!black},
+  stringstyle=\color{green!35!black},
+  numbers=left,
+  numberstyle=\tiny,
+  stepnumber=1,
+  numbersep=6pt,
+  frame=single,
+  breaklines=true,
+  columns=fullflexible
+}
+
+\title{Source Listing Stress Case}
+\author{Test Corpus}
+\date{}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+This fixture tests monospaced inline text and a displayed source listing using
+the \texttt{listings} package. The example resembles a reproducibility appendix
+in a computational social science paper.
+\end{abstract}
+
+\section{Pipeline Description}
+\label{sec:pipeline}
+
+The analysis pipeline begins with the function \texttt{clean\_panel()} and ends
+with a short diagnostic table. Inline code should remain monospaced when the
+document is converted, including identifiers such as \texttt{site\_id} and
+\texttt{event\_time}.
+
+\begin{lstlisting}[language=Python,caption={Minimal synthetic cleaning step},label={lst:cleaning}]
+def clean_panel(records):
+    """Return observations with complete identifiers."""
+    cleaned = []
+    for row in records:
+        if row["site_id"] and row["event_time"] is not None:
+            row["post"] = int(row["event_time"] >= 0)
+            cleaned.append(row)
+    return cleaned
+\end{lstlisting}
+
+Listing~\ref{lst:cleaning} includes indentation, comments, strings, line
+numbers, and a caption. These elements commonly reveal whether a converter treats
+source listings as formatted code blocks or as ordinary paragraphs.
+
+\section{Diagnostic Output}
+\label{sec:diagnostic}
+
+\begin{table}[htbp]
+\centering
+\caption{Synthetic code-path diagnostics}
+\label{tab:diagnostics}
+\begin{tabular}{lcc}
+\toprule
+Check & Rows affected & Status \\
+\midrule
+Identifier present & 240 & Pass \\
+Event time present & 233 & Pass \\
+Post indicator created & 233 & Pass \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+The table confirms that the listing is embedded in an otherwise conventional
+academic document with cross-references and prose.
+
+\end{document}

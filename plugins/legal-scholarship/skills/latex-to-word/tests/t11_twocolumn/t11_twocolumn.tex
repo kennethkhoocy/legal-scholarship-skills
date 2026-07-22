@@ -1,0 +1,65 @@
+\documentclass[twocolumn,11pt]{article}
+\usepackage[margin=0.75in]{geometry}
+\usepackage{booktabs}
+\usepackage{graphicx}
+
+\graphicspath{{figures/}}
+
+\title{Two-Column Layout Stress Case}
+\author{Test Corpus}
+\date{}
+
+\begin{document}
+\maketitle
+
+\section{Overview}
+
+This source uses the two-column article option. It includes a wide figure float
+that spans both columns and a normal table that remains within one column. The
+text around the floats is long enough to force ordinary column balancing.
+
+The first paragraph describes a hypothetical evaluation setting in which sites
+report weekly process indicators. The paragraph provides running text before the
+wide figure so that the placement algorithm has realistic surrounding content.
+
+\begin{figure*}[t]
+\centering
+\includegraphics[width=0.82\textwidth]{wide_figure.png}
+\caption{A generated wide figure spanning both columns}
+\label{fig:wide}
+\end{figure*}
+
+Additional text follows the wide display. The purpose is to create enough
+material for column flow before and after the float. Converters often linearize
+two-column layouts, so this test records how the result handles a document whose
+source was explicitly typeset in columns.
+
+\begin{table}[htbp]
+\centering
+\caption{Column-local summary}
+\label{tab:twocol}
+\begin{tabular}{lrr}
+\toprule
+Group & Mean & N \\
+\midrule
+North & 2.41 & 38 \\
+South & 2.87 & 42 \\
+East & 2.66 & 35 \\
+West & 2.52 & 39 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\section{Discussion}
+
+The remaining paragraphs give the two-column layout enough content to exercise
+pagination. Site-level summaries are intentionally simple, allowing the layout
+features rather than the substantive claims to drive the test behavior. The table
+in this section should remain readable even though the surrounding document uses
+columns.
+
+The wide figure in Figure \ref{fig:wide} is a separate case from the local table
+in Table \ref{tab:twocol}. Both floats should have captions, labels, and nearby
+paragraph text in the compiled PDF.
+
+\end{document}

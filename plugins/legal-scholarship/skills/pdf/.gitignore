@@ -1,0 +1,19 @@
+__pycache__/
+*.pyc
+*.pyo
+.pytest_cache/
+.coverage
+tests/fixtures_generated/
+cleanup/
+.venv/
+*.egg-info/
+dist/
+
+# PII / third-party content — never commit source documents or extraction scratch.
+# Source PDFs are someone else's content; logs leak local machine paths; the
+# *_media/*_out/*_images dirs are extractor output (figures + body text).
+*.pdf
+*.log
+*_media/
+*_out/
+*_images/

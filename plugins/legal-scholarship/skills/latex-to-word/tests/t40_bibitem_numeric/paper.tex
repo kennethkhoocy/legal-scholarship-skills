@@ -1,0 +1,83 @@
+\documentclass[11pt]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{amsmath}
+\usepackage[numbers,square]{natbib}
+\usepackage{cleveref}
+
+\title{Numeric Natbib with Manual Bibliography}
+\author{Test Corpus}
+\date{}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+This fixture exercises natbib in numeric mode with a hand-written
+\texttt{thebibliography} list rather than a BibTeX run, so it compiles
+self-contained. It mixes parenthetical and textual citations, a citation with a
+page locator, and a multiple-key citation, all of which must resolve to bracketed
+numbers in document order.
+\end{abstract}
+
+\section{Citation Forms}
+\label{sec:forms}
+
+The event-study estimator used throughout applied corporate finance traces to
+\citet{brown1985using}, who formalize the market-model abnormal return. Standard
+treatments of the cross-sectional test statistics appear in later work
+\citep{campbell1997econometrics}. When trading is thin, a trade-to-trade
+adjustment is preferable \citep[p.~5]{maynesrumsey1993}, and the small-sample
+behaviour of the associated tests has been examined directly
+\citep{kolari2010event,corrado1992nonparametric}.
+
+Because the bibliography is configured with the \texttt{numbers} and
+\texttt{square} options, each of these citations renders as a bracketed number,
+and \citet{brown1985using} additionally prints the author name before its number.
+The multiple-key citation above should collapse to a single bracket listing two
+numbers.
+
+\section{Cross-References}
+\label{sec:xref}
+
+\Cref{sec:forms} introduces the four citation forms, while the present section
+confirms that \texttt{cleveref} and \texttt{natbib} coexist. A trivial
+identity, $(a+b)^2 = a^2 + 2ab + b^2$, is included only to verify that inline
+mathematics is unaffected by the citation machinery. The reference list that
+follows is enumerated manually, so the citation numbers are assigned by the order
+of the \verb|\bibitem| entries below.
+
+\begin{thebibliography}{9}
+
+\bibitem[Brown and Warner(1985)]{brown1985using}
+Stephen J. Brown and Jerold B. Warner.
+\newblock Using daily stock returns: The case of event studies.
+\newblock \emph{Journal of Financial Economics}, 14(1):3--31, 1985.
+
+\bibitem[Campbell et al.(1997)]{campbell1997econometrics}
+John Y. Campbell, Andrew W. Lo, and A. Craig MacKinlay.
+\newblock \emph{The Econometrics of Financial Markets}.
+\newblock Princeton University Press, Princeton, NJ, 1997.
+
+\bibitem[Maynes and Rumsey(1993)]{maynesrumsey1993}
+Elizabeth Maynes and John Rumsey.
+\newblock Conducting event studies with thinly traded stocks.
+\newblock \emph{Journal of Banking \& Finance}, 17(1):145--157, 1993.
+
+\bibitem[Corrado and Zivney(1992)]{corrado1992nonparametric}
+Charles J. Corrado and Terry L. Zivney.
+\newblock The specification and power of the sign test in event study hypothesis
+tests using daily stock returns.
+\newblock \emph{Journal of Financial and Quantitative Analysis}, 27(3):465--478,
+1992.
+
+\bibitem[Kolari and Pynn\"{o}nen(2010)]{kolari2010event}
+James W. Kolari and Seppo Pynn\"{o}nen.
+\newblock Event study testing with cross-sectional correlation of abnormal
+returns.
+\newblock \emph{Review of Financial Studies}, 23(11):3996--4025, 2010.
+
+\end{thebibliography}
+
+\end{document}

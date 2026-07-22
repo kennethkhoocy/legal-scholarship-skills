@@ -1,0 +1,78 @@
+\documentclass[11pt]{article}
+
+\usepackage[margin=1in]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{amsmath}
+\usepackage{booktabs}
+\usepackage[table]{xcolor}
+\usepackage{cleveref}
+
+\title{Colored Tabular Rules under \texttt{colortbl}:\\A Fidelity Stress Test}
+\author{Test Corpus}
+\date{}
+
+\begin{document}
+\maketitle
+
+\section{Overview}
+
+This fixture exercises the interaction between the \texttt{booktabs} package and
+the \texttt{colortbl} mechanism loaded through \verb|\usepackage[table]{xcolor}|.
+Color directives in a tabular environment are notoriously difficult to reproduce
+in a word-processing target because they operate at four distinct granularities:
+whole rows, individual cells, entire columns, and inline text spans. A converter
+that flattens a colored table into a plain grid loses information that a careful
+reader relies on, so each granularity is represented separately in
+\cref{tab:budget} below.
+
+The table reports a synthetic departmental budget across three fiscal years. Row
+shading alternates to aid horizontal tracking; one cell is highlighted to draw
+attention to an out-of-band figure; one column carries a faint background tint
+applied through the column specification; and a single entry uses colored text
+to flag a provisional value. None of these effects changes the underlying
+numbers, which means a faithful conversion should preserve both the data and the
+visual encoding that distinguishes the rows.
+
+\begin{table}[htbp]
+\centering
+\caption{Synthetic departmental budget with row, cell, column, and text coloring.}
+\label{tab:budget}
+\begin{tabular}{l >{\columncolor{blue!8}}r r r}
+\toprule
+Category & FY2023 & FY2024 & FY2025 \\
+\midrule
+\rowcolor{gray!20}
+Personnel      & 1{,}240 & 1{,}310 & 1{,}388 \\
+Equipment      &   305 &   290 &   332 \\
+\rowcolor{gray!20}
+Travel         &    88 &    95 & \cellcolor{yellow} 412 \\
+Software       &   146 &   158 &   171 \\
+\rowcolor{gray!20}
+Contingency    &    50 &    50 & \textcolor{red}{75} \\
+\midrule
+Total          & 1{,}829 & 1{,}903 & 2{,}378 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\section{Reading the encoding}
+
+The alternating \verb|\rowcolor{gray!20}| shading marks the Personnel, Travel,
+and Contingency rows, leaving the intervening rows on the default background. The
+\verb|\cellcolor{yellow}| applied to the FY2025 travel figure signals that the
+\$412 outlay is anomalous relative to the prior two years, when travel hovered
+below \$100. Because the second column is declared with
+\verb|>{\columncolor{blue!8}}r|, every FY2023 figure sits on a faint blue tint
+regardless of any row shading, which lets a reader follow that column down the
+page. Finally, the provisional contingency figure for FY2025 is set in
+\verb|\textcolor{red}{75}| so that it reads as an estimate rather than a
+committed amount.
+
+Taken together, the four mechanisms in \cref{tab:budget} cover the practical
+range of color usage in scholarly tables. A conversion that drops the column
+tint, collapses the alternating rows to a single fill, or silently discards the
+red text would degrade the information content even while leaving the numerals
+intact, which is precisely the failure mode this fixture is designed to surface.
+
+\end{document}

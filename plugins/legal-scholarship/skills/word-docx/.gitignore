@@ -1,0 +1,13 @@
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.pytest_cache/
+*.tmp
+*.bak
+*.swp
+.venv/
+node_modules/
+.DS_Store
+Thumbs.db
+*conflicted copy*

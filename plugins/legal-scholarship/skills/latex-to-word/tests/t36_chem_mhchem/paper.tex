@@ -1,0 +1,138 @@
+\documentclass[11pt]{article}
+
+\usepackage[margin=1in]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{amsmath}
+\usepackage{booktabs}
+\usepackage[version=4]{mhchem}
+\usepackage{cleveref}
+
+\Crefname{table}{Table}{Tables}
+\crefname{table}{Table}{Tables}
+\Crefname{equation}{Equation}{Equations}
+\crefname{equation}{Equation}{Equations}
+
+\title{Notation for Aqueous Reaction Chemistry:\\ A Short Worked Survey with \texttt{mhchem}}
+\author{A.\ Khoo}
+\date{\today}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+This note surveys a handful of elementary results in aqueous and combustion
+chemistry, using the \texttt{mhchem} package (version~4) to typeset every
+chemical formula and reaction. We move from simple molecular formulae through
+polyatomic ions to balanced reaction equations, and close with a small table of
+physical properties indexed by chemical species. The aim is expository: the
+chemistry is standard, and the emphasis falls on consistent, readable notation
+within ordinary academic prose.
+\end{abstract}
+
+\section{Molecular formulae in running text}
+
+The most basic use of \ce{} is to set a molecular formula inline. Water,
+\ce{H2O}, and carbon dioxide, \ce{CO2}, are the canonical products of complete
+hydrocarbon combustion, while methane, \ce{CH4}, is the simplest fuel. Subscript
+stoichiometry is handled automatically: glucose is written \ce{C6H12O6}, and
+ammonia is \ce{NH3}. When a formula carries net charge, \texttt{mhchem} places
+the sign as a superscript without further intervention, so the sulfate ion is
+\ce{SO4^2-}, the hydronium ion is \ce{H3O+}, the hydroxide ion is \ce{OH-}, and
+the calcium cation is \ce{Ca^2+}. Isotopic and state annotations compose in the
+same way; for instance dissolved oxygen may be written \ce{O2(aq)} and solid
+calcium carbonate \ce{CaCO3(s)}.
+
+\section{Balanced reactions inline and in display}
+
+A balanced equation may be set inline when it is short. The combustion of
+hydrogen, \ce{2 H2 + O2 -> 2 H2O}, and the neutralisation of hydrochloric acid by
+sodium hydroxide, \ce{HCl + NaOH -> NaCl + H2O}, are both compact enough to read
+comfortably mid-sentence. Reaction arrows, the $+$ separators, and stoichiometric
+coefficients are all produced by the \ce{} parser rather than by hand.
+
+Longer or more important reactions are better displayed. The dissolution and
+buffering of carbon dioxide in water, central to ocean acidification, proceeds
+through carbonic acid and bicarbonate as in \cref{eq:carbonate}:
+%
+\begin{equation}
+  \ce{CO2(aq) + H2O(l) <=> H2CO3(aq) <=> H+ + HCO3^- <=> 2 H+ + CO3^2-}.
+  \label{eq:carbonate}
+\end{equation}
+%
+The doubled equilibrium arrows in \cref{eq:carbonate} indicate reversible steps;
+each forward step releases a proton, which is why rising dissolved \ce{CO2}
+lowers the $\mathrm{pH}$ of seawater. A second illustrative display is the
+complete combustion of methane,
+%
+\begin{equation}
+  \ce{CH4(g) + 2 O2(g) -> CO2(g) + 2 H2O(g)},
+  \label{eq:methane}
+\end{equation}
+%
+which conserves four hydrogen atoms and, counting the two diatomic oxygen
+molecules against the products, four oxygen atoms on each side. \Cref{eq:methane}
+is the elementary energy-release reaction behind natural-gas heating.
+
+\section{Thermodynamic quantities}
+
+Reaction enthalpies attach naturally to the displayed equations. For the methane
+combustion of \cref{eq:methane} the standard enthalpy of reaction is
+$\Delta H^\circ_{\mathrm{r}} \approx -890~\mathrm{kJ\,mol^{-1}}$, the strongly
+negative sign marking it as exothermic. In general the standard reaction enthalpy
+is obtained from tabulated enthalpies of formation by
+\[
+  \Delta H^\circ_{\mathrm{r}}
+  = \sum_{\text{products}} \nu_i\, \Delta H^\circ_{\mathrm{f},i}
+  - \sum_{\text{reactants}} \nu_j\, \Delta H^\circ_{\mathrm{f},j},
+\]
+where the $\nu$ are stoichiometric coefficients read directly off the balanced
+equation. The same bookkeeping applied to \cref{eq:carbonate} explains why the
+carbonate equilibria are only mildly temperature-sensitive near ambient
+conditions.
+
+\section{A table of species and properties}
+
+\Cref{tab:species} collects a few of the species named above together with their
+molar masses and aqueous behaviour. Because the leftmost column is set with
+\ce{}, the formulae carry their proper subscripts and charges inside the
+\texttt{booktabs} rule structure.
+
+\begin{table}[ht]
+  \centering
+  \caption{Selected chemical species with approximate molar masses and a
+  qualitative note on aqueous behaviour. Molar masses are rounded to one
+  decimal place.}
+  \label{tab:species}
+  \begin{tabular}{l c l}
+    \toprule
+    Species & Molar mass $(\mathrm{g\,mol^{-1}})$ & Aqueous behaviour \\
+    \midrule
+    \ce{H2O}      & 18.0  & solvent \\
+    \ce{CO2}      & 44.0  & weakly acidic on dissolution \\
+    \ce{CH4}      & 16.0  & essentially insoluble \\
+    \ce{NaCl}     & 58.4  & fully dissociates \\
+    \ce{SO4^2-}   & 96.1  & spectator in most acid--base systems \\
+    \ce{HCO3^-}   & 61.0  & amphoteric buffer component \\
+    \ce{CaCO3}    & 100.1 & sparingly soluble \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+The entries of \cref{tab:species} are consistent with the reactions discussed
+earlier: \ce{NaCl}, the product of the neutralisation
+\ce{HCl + NaOH -> NaCl + H2O}, dissociates completely, whereas \ce{CaCO3}, formed
+when \ce{CO3^2-} from \cref{eq:carbonate} meets \ce{Ca^2+}, is only sparingly
+soluble and precipitates as a solid.
+
+\section{Conclusion}
+
+Across \crefrange{eq:carbonate}{eq:methane} and \cref{tab:species}, a single
+markup convention, the \ce{} command of \texttt{mhchem}, handles molecular
+formulae such as \ce{H2O} and \ce{CO2}, charged species such as \ce{SO4^2-},
+balanced reactions such as \ce{2 H2 + O2 -> 2 H2O}, reversible equilibria, and
+formulae embedded in a \texttt{booktabs} table. The notation remains uniform
+whether a formula appears inline in prose, in a numbered display equation, or in
+a tabulated column.
+
+\end{document}

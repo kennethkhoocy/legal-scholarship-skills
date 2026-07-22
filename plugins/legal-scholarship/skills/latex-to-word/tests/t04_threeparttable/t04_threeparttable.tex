@@ -1,0 +1,40 @@
+\documentclass[11pt]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage{booktabs}
+\usepackage{threeparttable}
+
+\title{Threeparttable Stress Case}
+\author{Test Corpus}
+\date{}
+
+\begin{document}
+\maketitle
+
+This document focuses on table notes that are attached to a float through the
+threeparttable environment.
+
+\begin{table}[htbp]
+\centering
+\caption{Estimated effects with table notes}
+\label{tab:threepart}
+\begin{threeparttable}
+\begin{tabular}{lccc}
+\toprule
+Measure & Control & Treatment & Difference \\
+\midrule
+Completion rate\tnote{a} & 0.62 & 0.71 & 0.09 \\
+Average visits & 3.14 & 3.68 & 0.54 \\
+Follow-up within 30 days\tnote{b} & 0.48 & 0.57 & 0.09 \\
+Administrative cost & 211.40 & 224.75 & 13.35 \\
+\bottomrule
+\end{tabular}
+\begin{tablenotes}
+\footnotesize
+\item[a] Completion is measured within the first observation window.
+\item[b] Follow-up excludes records with missing contact information.
+\item[] Values are unweighted site means.
+\end{tablenotes}
+\end{threeparttable}
+\end{table}
+
+\end{document}

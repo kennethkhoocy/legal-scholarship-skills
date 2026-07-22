@@ -1,0 +1,28 @@
+{
+  "style_id": "bluebook",
+  "display_name": "Bluebook (21st ed.)",
+  "short_forms": {
+    "ibid_term": "\\textit{Id.}",
+    "ibid_require_sole_citation": true,
+    "ibid_require_immediately_preceding": true,
+    "supra_template": "{signal}{author}, \\textit{{supra}} note {n}",
+    "supra_with_short_title_template": "{signal}{author}, \\textit{{{short_title}}}, \\textit{{supra}} note {n}",
+    "hereinafter_template": "[hereinafter \\textit{{{short_title}}}]",
+    "use_hereinafter": true,
+    "et_al_threshold": 3,
+    "et_al_format": "{first_author} et al.",
+    "two_author_format": "{first_author} \\& {second_author}"
+  },
+  "signals": [
+    "See generally", "See also", "But see", "But cf.",
+    "Compare", "Cf.", "See", "E.g.,", "Accord"
+  ],
+  "merge": {
+    "separator": "; ",
+    "lowercase_signals_after_first": true,
+    "end_punctuation": "."
+  },
+  "llm_prompt_context": {
+    "short_form_description": "Bluebook short-form post-processing converts repeated citations to Id. and supra note N, with hereinafter for same-author disambiguation."
+  }
+}

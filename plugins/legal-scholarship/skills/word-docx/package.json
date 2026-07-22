@@ -1,0 +1,12 @@
+{
+  "name": "word-docx-js-builder",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Pin for docx-js used by word-docx's js-routed build path. Not published.",
+  "engines": {
+    "node": ">=18"
+  },
+  "dependencies": {
+    "docx": "^9.6.1"
+  }
+}

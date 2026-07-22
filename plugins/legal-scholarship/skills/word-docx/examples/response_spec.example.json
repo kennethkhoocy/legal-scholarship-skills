@@ -1,0 +1,36 @@
+{
+  "title": "Response to Reviewer Comments",
+  "subtitle": "Manuscript ID: MS-2026-0042",
+  "sections": [
+    {
+      "heading": "General Response",
+      "paragraphs": [
+        "We thank the reviewer for their careful reading and constructive feedback.",
+        "We have addressed each comment individually below and made corresponding revisions to the manuscript.[^1]"
+      ]
+    }
+  ],
+  "items": [
+    {
+      "comment_id": "C001",
+      "comment": "The introduction does not adequately situate the contribution within the existing literature.",
+      "response": "We have expanded the literature review in Section 2 to include recent work by Smith (2025) and Jones (2024), and added a paragraph clarifying our contribution relative to these studies.",
+      "revision_made": "Added two paragraphs to Section 2 (pp. 4-5) and revised the final paragraph of the Introduction."
+    },
+    {
+      "comment_id": "C002",
+      "comment": "Table 3 is difficult to read. Consider splitting into two tables.",
+      "response": "We agree and have split Table 3 into Tables 3a and 3b, with 3a reporting baseline results and 3b reporting robustness checks.",
+      "revision_made": "Replaced Table 3 with Tables 3a and 3b on pp. 12-13."
+    },
+    {
+      "comment_id": "C003",
+      "comment": "The conclusion overstates the policy implications given the data limitations acknowledged in Section 5.",
+      "response": "We have tempered the language in the Conclusion to align with the caveats discussed in Section 5.",
+      "revision_made": "Revised paragraphs 2-3 of the Conclusion (p. 18)."
+    }
+  ],
+  "footnotes": {
+    "1": "See Smith (2025) for a comprehensive review of this literature."
+  }
+}

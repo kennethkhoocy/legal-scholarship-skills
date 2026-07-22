@@ -1,0 +1,25 @@
+{
+  "title": "Quarterly Review",
+  "subtitle": "Q1 2026",
+  "page": {
+    "size": "letter",
+    "orientation": "portrait",
+    "margins": { "top": 1.0, "bottom": 1.0, "left": 1.0, "right": 1.0 }
+  },
+  "sections": [
+    {
+      "heading": "Overview",
+      "paragraphs": [
+        "Revenue grew 15% year-over-year.[^1]",
+        "Operating margin expanded to 22%."
+      ]
+    },
+    {
+      "heading": "Outlook",
+      "paragraphs": ["Guidance remains unchanged for Q2."]
+    }
+  ],
+  "footnotes": {
+    "1": "Source: internal management accounts; not audited."
+  }
+}

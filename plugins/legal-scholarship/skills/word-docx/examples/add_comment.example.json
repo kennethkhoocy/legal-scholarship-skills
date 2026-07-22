@@ -1,0 +1,33 @@
+{
+  "examples": [
+    {
+      "label": "Reply to comment C001",
+      "command": [
+        "python", "scripts/word_docx.py", "add-comment",
+        "INPUT.docx", "--out", "OUTPUT.docx",
+        "--reply-to", "C001",
+        "--text", "Adopted in revised draft; see Section 2.",
+        "--author", "Claude"
+      ]
+    },
+    {
+      "label": "Anchor a new comment on paragraph 3, span 'effective date'",
+      "command": [
+        "python", "scripts/word_docx.py", "add-comment",
+        "INPUT.docx", "--out", "OUTPUT.docx",
+        "--anchor-paragraph", "3",
+        "--anchor-text", "effective date",
+        "--text", "Clarify which calendar this references.",
+        "--author", "Claude"
+      ]
+    },
+    {
+      "label": "Resolve comment C002",
+      "command": [
+        "python", "scripts/word_docx.py", "add-comment",
+        "INPUT.docx", "--out", "OUTPUT.docx",
+        "--resolve", "C002"
+      ]
+    }
+  ]
+}

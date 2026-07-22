@@ -1,0 +1,14 @@
+{
+  "name": "legal-scholarship-skills",
+  "owner": {
+    "name": "Kenneth Khoo",
+    "url": "https://github.com/kennethkhoocy"
+  },
+  "plugins": [
+    {
+      "name": "legal-scholarship",
+      "source": "./plugins/legal-scholarship",
+      "description": "Claude Code skills for legal scholarship: verified citation placement (Bluebook/OSCOLA/McGill), article planning, law-review docx pipelines, document sourcing and delivery"
+    }
+  ]
+}

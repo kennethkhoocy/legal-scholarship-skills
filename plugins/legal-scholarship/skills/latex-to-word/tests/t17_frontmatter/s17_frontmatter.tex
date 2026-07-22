@@ -1,0 +1,81 @@
+\documentclass[11pt]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage{booktabs}
+\usepackage{amsmath}
+
+\title{Front Matter and Appendix Stress Case}
+\author{Maya Chen\thanks{Department of Public Policy, Example University.}
+\and Daniel Ortiz\thanks{School of Information, Sample Institute.}
+\and Priya Raman\thanks{Corresponding author: priya.raman@example.edu.}}
+\date{June 2026}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+This fixture combines author footnotes, an abstract, a table of contents, a
+numbered appendix, and an acknowledgements section. The structure resembles a
+short manuscript prepared for academic review.
+\end{abstract}
+
+\tableofcontents
+\newpage
+
+\section{Overview}
+\label{sec:overview}
+
+The paper studies a synthetic administrative intervention that standardizes how
+cases are routed for review. The front matter contains multiple authors with
+\texttt{\textbackslash thanks} notes, which should remain distinguishable from
+ordinary body footnotes after conversion.
+
+\section{Design}
+\label{sec:design}
+
+The design compares records before and after a reporting template is introduced.
+The estimand is written as
+\begin{equation}
+\Delta = E[Y_i \mid T_i=1] - E[Y_i \mid T_i=0],
+\label{eq:estimand}
+\end{equation}
+where $T_i$ denotes exposure to the template. Equation~\ref{eq:estimand} provides
+a compact reference target for the appendix.
+
+\begin{table}[htbp]
+\centering
+\caption{Synthetic front-matter example counts}
+\label{tab:counts}
+\begin{tabular}{lcc}
+\toprule
+Group & Records & Mean outcome \\
+\midrule
+Before template & 96 & 0.41 \\
+After template & 104 & 0.48 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\section{Discussion}
+\label{sec:discussion}
+
+Table~\ref{tab:counts} reports the compact descriptive comparison. The discussion
+is brief because the purpose of the fixture is structural coverage rather than a
+substantive empirical claim.
+
+\section*{Acknowledgements}
+\addcontentsline{toc}{section}{Acknowledgements}
+
+The authors thank the synthetic review board for comments on the template and
+the example data dictionary. All names and institutions in this fixture are
+fictional.
+
+\appendix
+
+\section{Appendix: Additional Definition}
+\label{app:definition}
+
+The appendix repeats the estimand in Equation~\ref{eq:estimand} and defines the
+binary exposure as $T_i=\mathbf{1}\{d_i \geq d_0\}$. Appendix numbering should
+remain separate from the main sections.
+
+\end{document}

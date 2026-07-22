@@ -1,0 +1,47 @@
+\documentclass[11pt]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage{booktabs}
+\usepackage{array}
+
+\newcommand{\sym}[1]{\textsuperscript{#1}}
+
+\title{Booktabs Table Stress Case}
+\author{Test Corpus}
+\date{}
+
+\begin{document}
+\maketitle
+
+This document isolates a booktabs table with grouped columns, partial rules, and
+significance markers. The table is deliberately compact because the conversion
+target should preserve the visual hierarchy created by booktabs rather than
+relying on vertical rules.
+
+\begin{table}[htbp]
+\centering
+\caption{Regression summary with grouped estimates}
+\label{tab:booktabs}
+\begin{tabular}{lcccc}
+\toprule
+& \multicolumn{2}{c}{Baseline} & \multicolumn{2}{c}{Adjusted} \\
+\cmidrule(lr){2-3}\cmidrule(lr){4-5}
+Outcome & Coef. & S.E. & Coef. & S.E. \\
+\midrule
+Treatment & 0.184\sym{***} & 0.041 & 0.167\sym{***} & 0.039 \\
+Post period & 0.072\sym{**} & 0.031 & 0.058\sym{*} & 0.030 \\
+Treatment $\times$ Post & 0.119\sym{***} & 0.028 & 0.103\sym{***} & 0.027 \\
+Covariate index & -0.033 & 0.024 & -0.029 & 0.023 \\
+\midrule
+Unit fixed effects & \multicolumn{2}{c}{Yes} & \multicolumn{2}{c}{Yes} \\
+Time fixed effects & \multicolumn{2}{c}{No} & \multicolumn{2}{c}{Yes} \\
+Observations & \multicolumn{2}{c}{4,812} & \multicolumn{2}{c}{4,812} \\
+$R^{2}$ & \multicolumn{2}{c}{0.214} & \multicolumn{2}{c}{0.297} \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+The surrounding prose supplies inline mathematical notation, such as
+$\widehat{\beta}=0.103$, to confirm that table conversion can coexist with
+ordinary paragraph content.
+
+\end{document}

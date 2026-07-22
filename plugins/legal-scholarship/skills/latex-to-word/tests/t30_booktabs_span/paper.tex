@@ -1,0 +1,98 @@
+\documentclass[11pt]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{amsmath}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{cleveref}
+
+% Significance stars rendered as a superscript, the estout/esttab convention.
+\newcommand{\sym}[1]{\textsuperscript{#1}}
+
+\title{A Spanned Booktabs Regression Table}
+\author{Test Corpus}
+\date{}
+
+\begin{document}
+\maketitle
+
+\section{Introduction}
+
+This fixture exercises the structural features that distinguish a
+publication-grade regression table from a plain grid. The table in
+\cref{tab:spanned} reports four specifications grouped into two blocks. A first
+header level uses \verb|\multicolumn| to place two group titles, ``Baseline''
+and ``Robustness,'' each spanning a pair of estimate columns; a second header
+level names the individual specifications beneath them. Two partial rules drawn
+with \verb|\cmidrule(lr)| underline the spanners without running the full width
+of the table, which is the booktabs idiom for showing that the group titles
+govern only their own columns.
+
+Below the header, each coefficient is followed on the next physical row by its
+standard error in parentheses, and \verb|\addlinespace| separates the
+coefficient blocks so the eye groups each estimate with its error. Significance
+is marked with superscript stars produced by a \verb|\sym| macro, and a note
+line beneath the rule records the estimator and the star thresholds. The point
+of the fixture is that all of this carries meaning: the column grouping, the
+partial rules, the coefficient/standard-error pairing, and the note must survive
+conversion for the table to remain readable.
+
+\section{Results}
+
+\Cref{tab:spanned} summarizes the four models. The interaction term
+$\text{Treatment}\times\text{Post}$ is the estimand of interest, and its
+magnitude is stable across the baseline and robustness blocks, with
+$\widehat{\beta}\approx 0.11$ throughout.
+
+\begin{table}[htbp]
+\centering
+\caption{Difference-in-differences estimates across baseline and robustness
+  specifications.}
+\label{tab:spanned}
+\begin{tabular}{l cc cc}
+\toprule
+& \multicolumn{2}{c}{Baseline} & \multicolumn{2}{c}{Robustness} \\
+\cmidrule(lr){2-3}\cmidrule(lr){4-5}
+& (1) & (2) & (3) & (4) \\
+& OLS & FE & FE+Cov. & IV \\
+\midrule
+Treatment            & 0.184\sym{***} & 0.171\sym{***} & 0.166\sym{***} & 0.158\sym{**}  \\
+                     & (0.041)        & (0.039)        & (0.038)        & (0.062)        \\
+\addlinespace
+Post period          & 0.072\sym{**}  & 0.064\sym{**}  & 0.059\sym{*}   & 0.061\sym{*}   \\
+                     & (0.031)        & (0.030)        & (0.030)        & (0.033)        \\
+\addlinespace
+Treatment $\times$ Post & 0.119\sym{***} & 0.111\sym{***} & 0.108\sym{***} & 0.114\sym{***} \\
+                     & (0.028)        & (0.027)        & (0.027)        & (0.035)        \\
+\addlinespace
+Covariate index      &                &                & -0.031         & -0.028         \\
+                     &                &                & (0.024)        & (0.025)        \\
+\addlinespace
+Constant             & 1.402\sym{***} & 1.388\sym{***} & 1.451\sym{***} & 1.460\sym{***} \\
+                     & (0.066)        & (0.061)        & (0.070)        & (0.072)        \\
+\midrule
+Unit fixed effects   & No  & Yes & Yes & Yes \\
+Observations         & 4{,}812 & 4{,}812 & 4{,}812 & 4{,}517 \\
+$R^{2}$              & 0.214 & 0.286 & 0.301 & 0.255 \\
+\bottomrule
+\addlinespace[2pt]
+\multicolumn{5}{l}{\footnotesize Standard errors in parentheses; clustered by
+  unit. \sym{*}~$p<0.10$, \sym{**}~$p<0.05$, \sym{***}~$p<0.01$.} \\
+\end{tabular}
+\end{table}
+
+\section{Discussion}
+
+The stability of the interaction coefficient across \cref{tab:spanned}'s four
+columns is the substantive finding, but for a fidelity test the layout is the
+object of interest. A converter that flattens the two header levels would merge
+the group titles into the specification row and lose the \verb|\cmidrule|
+spans; one that ignores \verb|\addlinespace| would collapse each standard error
+onto its coefficient with no visual separation; and one that strips the trailing
+\verb|\multicolumn| note row would discard the star legend that gives the
+superscripts their meaning. Each of these is a distinct failure mode, which is
+why the fixture combines them in a single realistic table rather than testing
+them in isolation.
+
+\end{document}

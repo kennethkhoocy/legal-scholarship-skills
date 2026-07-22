@@ -1,0 +1,30 @@
+{
+  "title": "Annual Report 2026",
+  "subtitle": "Fiscal year ended December 31, 2026",
+  "page": {
+    "size": "letter",
+    "orientation": "portrait",
+    "margins": { "top": 1.0, "bottom": 1.0, "left": 1.0, "right": 1.0 }
+  },
+  "toc": { "title": "Table of Contents", "heading_range": "1-3", "hyperlinks": true },
+  "columns": 1,
+  "page_sections": [
+    {
+      "header": [{ "type": "text", "value": "Annual Report 2026" }],
+      "footer": [
+        { "type": "text", "value": "Page " },
+        { "type": "page_number" }
+      ]
+    }
+  ],
+  "sections": [
+    { "heading": "Executive Summary", "paragraphs": ["A strong year."] },
+    { "heading": "Financial Highlights", "paragraphs": ["See appendix for detail."] }
+  ],
+  "internal_links": [
+    { "anchor": "appendix", "label": "Appendix A" }
+  ],
+  "native_footnotes": {
+    "1": "All figures in USD millions, audited."
+  }
+}

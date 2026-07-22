@@ -1,0 +1,136 @@
+\documentclass[11pt]{article}
+
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath}
+\usepackage{xcolor}
+\usepackage{listings}
+\usepackage{cleveref}
+
+% Custom colors for the source-listing style.
+\definecolor{codekeyword}{rgb}{0.10,0.10,0.65}
+\definecolor{codecomment}{rgb}{0.30,0.50,0.30}
+\definecolor{codestring}{rgb}{0.62,0.13,0.20}
+\definecolor{codeframe}{gray}{0.55}
+\definecolor{codeback}{gray}{0.97}
+
+% A named listing style: colored keywords/comments/strings, a single frame,
+% left-hand line numbers, and the caption printed below the float.
+\lstdefinestyle{pystyle}{
+  language=Python,
+  backgroundcolor=\color{codeback},
+  basicstyle=\ttfamily\footnotesize,
+  keywordstyle=\bfseries\color{codekeyword},
+  commentstyle=\itshape\color{codecomment},
+  stringstyle=\color{codestring},
+  numbers=left,
+  numberstyle=\tiny\color{codeframe},
+  numbersep=8pt,
+  stepnumber=1,
+  frame=single,
+  rulecolor=\color{codeframe},
+  framesep=4pt,
+  captionpos=b,
+  showstringspaces=false,
+  breaklines=true,
+  columns=fullflexible,
+  tabsize=4,
+  aboveskip=1.2em,
+  belowskip=1.2em
+}
+\lstset{style=pystyle}
+
+% Make cleveref name the lstlisting float a "Listing".
+\crefname{lstlisting}{Listing}{Listings}
+\Crefname{lstlisting}{Listing}{Listings}
+
+\title{Reproducible Source Listings as a Conversion Stress Case}
+\author{Test Corpus}
+\date{}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+This fixture exercises the \texttt{listings} package under conditions that
+commonly appear in a reproducibility appendix: a custom, colored listing style,
+an inline code span, a displayed listing typed directly into the source, and a
+second listing read from a child file on disk. The accompanying prose carries
+cross-references to the code so that a faithful conversion must preserve both
+the formatted blocks and the numbered references that point at them.
+\end{abstract}
+
+\section{Motivation}
+\label{sec:motivation}
+
+Empirical papers increasingly ship the code that produced their estimates, and
+that code is usually presented through a package such as \texttt{listings} rather
+than as ordinary prose. The distinguishing features are syntactic: keywords,
+comments, and string literals are colored differently, leading whitespace is
+preserved, and each physical line carries a number so that the surrounding text
+can refer to it. A converter that flattens these elements into a single
+paragraph loses the indentation that makes the code legible and discards the line
+numbering on which the discussion depends. The remainder of this note assembles
+the constructs that most often expose such failures.
+
+Inline code appears in running text as well. When a function such as
+\lstinline|standardized_car(abnormal, forecast_sd)| is named mid-sentence, it
+should remain monospaced and visually distinct from the body font, exactly as an
+identifier like \lstinline|forecast_sd| should. Inline spans share the typeface
+of the displayed blocks but carry neither a frame nor a line number.
+
+\section{A Typed Listing}
+\label{sec:typed}
+
+\Cref{lst:accumulate} is entered directly into the document source. It contains a
+docstring, an inline comment, a string literal, and four levels of indentation,
+all of which the listing style renders with distinct treatment. The line numbers
+on the left margin let the discussion single out individual statements.
+
+\begin{lstlisting}[caption={Accumulating an abnormal return over the event window},label={lst:accumulate}]
+def accumulate(abnormal_returns):
+    """Sum abnormal returns across the event window."""
+    total = 0.0
+    for value in abnormal_returns:
+        if value is None:          # skip non-trading days
+            continue
+        total += value
+    return total
+\end{lstlisting}
+
+The loop in \cref{lst:accumulate} guards against missing observations before it
+adds each abnormal return to the running total, a pattern familiar from
+event-study code that must tolerate non-trading days. The standardization that
+typically follows this accumulation appears separately in \cref{lst:external}.
+
+\section{A Listing Read From Disk}
+\label{sec:external}
+
+The second listing is not present in this file. It is pulled in at compile time
+with \verb|\lstinputlisting| from \texttt{code/sample.py}, so the converter must
+resolve the external path and apply the same named style that governs the typed
+block above. \Cref{lst:external} reports the standardization step that scales the
+cumulative abnormal return by its forecast standard deviation.
+
+\lstinputlisting[style=pystyle,caption={Standardizing the cumulative abnormal return (read from \texttt{code/sample.py})},label={lst:external}]{code/sample.py}
+
+Read together, \cref{lst:accumulate,lst:external} trace a small but complete
+computation: the first accumulates the raw signal and the second rescales it into
+a test statistic. Because one listing is typed inline and the other is read from
+a child file, a faithful conversion must handle both ingestion paths while
+keeping the colored syntax, the line numbers, the captions printed below each
+block, and the cross-references that bind the prose to the code.
+
+\section{Discussion}
+\label{sec:discussion}
+
+The constructs gathered here are deliberately ordinary; each appears routinely in
+computational appendices. Their combination is what makes the fixture demanding,
+since a converter must simultaneously honor a user-defined style, an inline code
+span, a directly typed float, an externally included float, and cleveref
+references that name the floats as listings rather than as generic figures.
+\Cref{sec:motivation,sec:typed,sec:external} together establish that the code is
+embedded in an otherwise conventional article with sectioning and prose.
+
+\end{document}

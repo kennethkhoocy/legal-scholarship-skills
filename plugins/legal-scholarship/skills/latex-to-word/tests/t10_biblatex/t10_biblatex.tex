@@ -1,0 +1,29 @@
+\documentclass[11pt]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage{csquotes}
+\usepackage[backend=biber,style=authoryear]{biblatex}
+
+\addbibresource{refs.bib}
+
+\title{Biblatex Citation Stress Case}
+\author{Test Corpus}
+\date{}
+
+\begin{document}
+\maketitle
+
+\textcite{knuth1984texbook} provides an influential account of TeX as a
+typesetting system. The workflow in this test also cites research on reproducible
+documents \autocite{gentzkow2014code} and computational notebooks
+\autocite{kluyver2016jupyter}. The bibliography is produced through biblatex and
+biber rather than through BibTeX.
+
+\section{Citation Forms}
+
+Textual and parenthetical citation forms appear in the same paragraph so that
+the conversion path must preserve both syntactic forms before the bibliography is
+printed.
+
+\printbibliography
+
+\end{document}

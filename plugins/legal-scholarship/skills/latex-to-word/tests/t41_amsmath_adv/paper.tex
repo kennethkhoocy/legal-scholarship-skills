@@ -1,0 +1,172 @@
+\documentclass[11pt]{article}
+
+\usepackage[margin=1in]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{booktabs}
+\usepackage[colorlinks=true,linkcolor=blue]{hyperref}
+\usepackage{cleveref}
+
+\title{Advanced Display Mathematics: A Stress Test for Structured Equation Conversion}
+\author{Test Corpus Author}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+\begin{abstract}
+This note exercises a range of advanced \texttt{amsmath} and \texttt{amssymb}
+constructions that frequently appear in analysis and combinatorics. The
+objective is to present these features in genuine mathematical prose, with
+numbered equations and cross-references, so that any document-conversion
+pipeline targeting Office Math Markup Language must reproduce subscript stacks,
+decorated arrows, braces, multi-line displays, boxed results, and modular
+arithmetic notation.
+\end{abstract}
+
+\section{Sums over restricted index sets}
+\label{sec:sums}
+
+A common pattern in enumerative combinatorics restricts a summation to index
+pairs satisfying several simultaneous conditions. We write such constraints
+beneath the summation sign using a stacked subscript. For nonnegative integers
+$i$ and $j$ bounded by $n$, consider the bilinear quantity
+\begin{equation}
+\label{eq:substack}
+S_n \;=\; \sum_{\substack{0 \le i \le n \\ 0 \le j \le n \\ i + j = n}}
+   \binom{n}{i}\, \binom{n}{j},
+\end{equation}
+where the inner factors are ordinary binomial coefficients. Because the
+constraint $i + j = n$ collapses the double sum to a single free index,
+\cref{eq:substack} evaluates in closed form to $\binom{2n}{n}$ by the
+Vandermonde convolution. The notation $\binom{n}{i}$ should render as a genuine
+two-row binomial coefficient rather than a fraction.
+
+\section{Decorated relations and limits}
+\label{sec:decorated}
+
+When two operators act in sequence it is often clarifying to annotate a relation
+symbol with the transformation responsible for it. Using \verb|\overset| and
+\verb|\underset| we display the data of a map together with its name:
+\begin{equation}
+\label{eq:overset}
+f(x) \;\overset{\text{def}}{=}\; \lim_{t \to 0^{+}} \frac{g(x+t) - g(x)}{t},
+\qquad
+a_n \;\underset{n \to \infty}{\longrightarrow}\; L .
+\end{equation}
+The annotation above the equality sign in \cref{eq:overset} marks it as a
+definition, while the label beneath the arrow records the limiting regime.
+
+A directed construction such as a chain complex or a sequence of refinements is
+naturally expressed with labelled extensible arrows. The morphisms below carry
+their names above and their degrees below:
+\begin{equation}
+\label{eq:arrows}
+A \xrightarrow{\;\varphi\;} B \xleftarrow[\psi]{\quad} C,
+\qquad
+X_0 \xrightarrow[\text{stage } 1]{\;\pi_1\;} X_1 .
+\end{equation}
+Here \cref{eq:arrows} pairs a right-pointing arrow decorated with $\varphi$ and a
+left-pointing arrow decorated beneath by $\psi$, each of which must retain its
+direction and its annotation after conversion.
+
+\section{Braced groupings}
+\label{sec:braces}
+
+Over- and under-braces are indispensable when a formula must be read as a few
+meaningful blocks. Grouping the terms of a finite geometric expansion makes the
+recursive structure visible:
+\begin{equation}
+\label{eq:braces}
+\overbrace{1 + x + x^{2} + \dots + x^{k}}^{\text{partial sum } P_k}
+\;=\;
+\underbrace{\frac{1 - x^{k+1}}{1 - x}}_{\text{valid for } x \neq 1}.
+\end{equation}
+The superscripted label on the overbrace and the subscripted side condition on
+the underbrace in \cref{eq:braces} are essential to the reading and must survive
+as attached annotations rather than detached text.
+
+\section{A long display split across lines}
+\label{sec:multline}
+
+Some identities are too wide for a single typeset line and are broken with the
+\texttt{multline} environment, which sets the first part flush left and the last
+part flush right. Expanding a triple product gives
+\begin{multline}
+\label{eq:multline}
+(a + b + c)^{3}
+= a^{3} + b^{3} + c^{3} \\
++ 3a^{2}b + 3a^{2}c + 3b^{2}a + 3b^{2}c + 3c^{2}a + 3c^{2}b \\
++ 6abc ,
+\end{multline}
+and the grouping of \cref{eq:multline} into a leading cube-sum line, a middle
+line of mixed quadratic terms, and a trailing symmetric term should be preserved
+in the converted output.
+
+\section{Boxed conclusions, congruences, and aligned derivations}
+\label{sec:align}
+
+To emphasise a final result we enclose it in a box. Fermat's little theorem, for
+a prime $p$ and an integer $a$ not divisible by $p$, asserts
+\begin{equation}
+\label{eq:boxed}
+\boxed{\,a^{\,p-1} \equiv 1 \pmod{p}\,},
+\end{equation}
+where the modular qualifier produced by \verb|\pmod| sits in parentheses to the
+right of the congruence. The boxed display in \cref{eq:boxed} must remain a
+single framed unit.
+
+The following aligned derivation carries a custom equation marker supplied by
+\verb|\tag*|, which suppresses the automatic number while still labelling the
+line for reference:
+\begin{align}
+\label{eq:star}
+\sum_{k=0}^{n} k
+&= 0 + 1 + 2 + \dots + n \notag \\
+&= \frac{n(n+1)}{2}. \tag*{($\ast$)}
+\end{align}
+We may refer back to the starred line via its tag using \eqref{eq:star}, which
+should display the literal marker $(\ast)$ in parentheses rather than a serial
+number.
+
+\section{Piecewise definitions and named operators}
+\label{sec:cases}
+
+Functions defined by cases use the \texttt{cases} environment, which aligns the
+branch values against their guards. The sign function is the canonical example,
+\begin{equation}
+\label{eq:cases}
+\operatorname{sgn}(x) =
+\begin{cases}
+  +1 & \text{if } x > 0, \\
+  \phantom{+}0 & \text{if } x = 0, \\
+  -1 & \text{if } x < 0,
+\end{cases}
+\end{equation}
+where \verb|\operatorname| typesets \(\operatorname{sgn}\) in upright roman as a
+named operator. A further example combining a named operator with modular
+reduction is the residue map
+\begin{equation}
+\label{eq:opmod}
+\operatorname{res}_m(x) \;=\; x \bmod m
+\;=\; x - m \left\lfloor \frac{x}{m} \right\rfloor ,
+\end{equation}
+so that $\operatorname{res}_m(x) \equiv x \pmod{m}$. The piecewise alignment in
+\cref{eq:cases} and the operator names in \cref{eq:cases,eq:opmod} are the
+features under test.
+
+\section{Summary}
+\label{sec:summary}
+
+The displays of \cref{sec:sums,sec:decorated,sec:braces,sec:multline,sec:align,sec:cases}
+collectively exercise restricted-index summation, decorated relations and arrows,
+braced groupings, a multi-line split, a boxed congruence with a modular
+qualifier, a starred custom tag recalled by \eqref{eq:star}, a piecewise
+definition, and named operators. A faithful conversion preserves the structure
+of each construction
+together with its attached annotations.
+
+\end{document}

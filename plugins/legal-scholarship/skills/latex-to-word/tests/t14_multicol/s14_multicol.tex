@@ -1,0 +1,66 @@
+\documentclass[11pt]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage{multicol}
+\usepackage{booktabs}
+
+\title{Multicolumn Text Stress Case}
+\author{Test Corpus}
+\date{}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+This paper-style fixture tests the \texttt{multicols} environment with ordinary
+prose, section headings, and a compact list. The document remains self-contained
+and avoids floating material inside the multicolumn region.
+\end{abstract}
+
+\section{Field Notes}
+\label{sec:field-notes}
+
+\begin{multicols}{2}
+\subsection*{Site Context}
+The study setting is a synthetic network of offices that adopted a common intake
+form during the same quarter. Each office kept its local scheduling process, but
+the intake fields used identical definitions. This design creates a simple
+example in which textual notes need to remain readable after conversion.
+
+\subsection*{Coding Rules}
+The coding protocol asks reviewers to classify each record before inspecting
+outcomes. The ordered checks are short enough for a list, but they still create
+indentation and spacing decisions within the multicolumn environment:
+\begin{itemize}
+\item confirm that the record has a valid intake date;
+\item mark whether the supervisor review field is complete;
+\item flag records with inconsistent follow-up status.
+\end{itemize}
+
+\subsection*{Interpretation}
+The two-column passage should preserve reading order from the left column to the
+right column. Line breaks may differ after conversion, although the paragraphs
+and list items should remain grouped within the multicolumn region.
+\end{multicols}
+
+\section{Check Counts}
+\label{sec:check-counts}
+
+\begin{table}[htbp]
+\centering
+\caption{Synthetic audit outcomes}
+\label{tab:audit}
+\begin{tabular}{lcc}
+\toprule
+Audit rule & Passed & Flagged \\
+\midrule
+Valid intake date & 217 & 4 \\
+Complete supervisor field & 198 & 23 \\
+Consistent follow-up status & 204 & 17 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+The table outside the multicolumn environment provides a simple reference point
+for ordinary paragraph and table rendering in the same document.
+
+\end{document}

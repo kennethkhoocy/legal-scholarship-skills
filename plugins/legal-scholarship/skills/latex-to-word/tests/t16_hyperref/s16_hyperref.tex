@@ -1,0 +1,65 @@
+\documentclass[11pt]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage{booktabs}
+\usepackage[hidelinks]{hyperref}
+
+\title{Hyperref Link Stress Case}
+\author{Test Corpus}
+\date{}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+This fixture tests internal references, explicit \texttt{\textbackslash hyperref}
+links, external hyperlinks, URL rendering, and footnote placement in a compact
+academic paper.
+\end{abstract}
+
+\section{Introduction}
+\label{sec:introduction}
+
+Conversion workflows should preserve both visible reference text and hyperlink
+targets. This document links forward to the \hyperref[sec:sample]{sample
+construction section}, cites Table~\ref{tab:links}, and includes a protocol URL:
+\url{https://example.org/protocol}. The source also contains an external
+\href{https://doi.org/10.0000/example}{replication record link} to exercise
+hyperlinked display text.
+
+The introduction includes a footnote with ordinary prose and inline mathematics
+so that footnote numbering can be checked in the same file.\footnote{The
+screening threshold is written as $s_i \geq 2$ in the synthetic protocol.}
+
+\section{Sample Construction}
+\label{sec:sample}
+
+The synthetic sample contains records with complete dates and nonmissing site
+identifiers. Section~\ref{sec:introduction} introduced the link targets, while
+this section provides the target location for a forward internal hyperlink. A
+converter can reflow the document, but the logical references should remain
+resolvable.
+
+\begin{table}[htbp]
+\centering
+\caption{Link types used in the fixture}
+\label{tab:links}
+\begin{tabular}{ll}
+\toprule
+Construct & Example target \\
+\midrule
+Internal section link & Section~\ref{sec:sample} \\
+Explicit hyperref link & \hyperref[sec:sample]{sample construction} \\
+Plain URL & \url{https://example.org/protocol} \\
+Named external link & \href{https://example.org/archive}{archive entry} \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\section{Conclusion}
+\label{sec:conclusion}
+
+The fixture closes by referring back to Table~\ref{tab:links}. The references are
+ordinary enough for manual inspection while still covering several hyperlink
+forms that often require special handling in Word output.
+
+\end{document}

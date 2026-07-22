@@ -1,0 +1,146 @@
+\documentclass[11pt]{article}
+
+\usepackage[margin=1in]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{booktabs}
+\usepackage{multirow}
+\usepackage{graphicx}
+\usepackage{rotating}
+\usepackage{lscape}
+\usepackage[colorlinks=true,linkcolor=blue]{hyperref}
+\usepackage{cleveref}
+
+\title{Rotated Floats and Landscape Layout: A Stress Test for Page Orientation}
+\author{Test Corpus Author}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+\begin{abstract}
+This note exercises page-orientation features supplied by the \texttt{rotating}
+and \texttt{lscape} packages. It contains a sideways figure float, a full
+landscape block enclosing a wide multi-column table, and a vertically rotated
+text span inside an otherwise upright table cell. Each rotated object carries a
+caption or heading and a label, and the prose cross-references every float so
+that a document-conversion pipeline must account both for the rotation and for
+the numbering of the rotated objects.
+\end{abstract}
+
+\section{Motivation}
+\label{sec:motivation}
+
+Wide tabular material and large schematic figures frequently exceed the printable
+width of a portrait page. The conventional remedy rotates the offending object
+through ninety degrees, either as a floating \texttt{sidewaysfigure} or
+\texttt{sidewaystable}, or by switching the entire page to landscape orientation
+with a \texttt{landscape} environment. A third, more local device rotates a short
+text span in place, which is useful for narrow column headings. We demonstrate
+all three below and refer to each from the surrounding discussion.
+
+The sideways schematic in \cref{fig:rotated} occupies the full text height when
+rotated, which is why such figures are reserved for diagrams that would otherwise
+be illegibly compressed. Its placeholder body is drawn with framing rules so that
+no external image file is required.
+
+\begin{sidewaysfigure}
+  \centering
+  \framebox[0.85\textwidth]{%
+    \rule{0pt}{4cm}%
+    \begin{minipage}{0.8\textwidth}
+      \centering
+      \rule{0.9\linewidth}{0.4pt}\\[1ex]
+      \textbf{Schematic placeholder: data-processing pipeline}\\[1ex]
+      \rule{0.9\linewidth}{0.4pt}\\[2ex]
+      Ingest $\longrightarrow$ Clean $\longrightarrow$ Transform
+      $\longrightarrow$ Model $\longrightarrow$ Report\\[2ex]
+      \rule{0.9\linewidth}{0.4pt}
+    \end{minipage}%
+  }
+  \caption{A sideways figure float rotated ninety degrees. The framed body
+    stands in for a wide schematic and uses only rules and text, so the fixture
+    needs no external graphics file.}
+  \label{fig:rotated}
+\end{sidewaysfigure}
+
+\section{A wide table on a landscape page}
+\label{sec:landscape}
+
+When a table has many columns the cleanest solution is to devote an entire
+landscape page to it. \Cref{tab:wide} reports a synthetic panel of summary
+statistics across eight measurement columns; on a portrait page these columns
+would collide with the right margin, whereas in the rotated landscape block they
+sit comfortably within the rotated text width. The table uses \texttt{booktabs}
+rules throughout.
+
+\begin{landscape}
+  \begin{table}
+    \centering
+    \caption{A wide eight-column panel of synthetic summary statistics, set on a
+      landscape page so that all columns fit within the rotated text width.}
+    \label{tab:wide}
+    \begin{tabular}{l rrrr rrrr}
+      \toprule
+      & \multicolumn{4}{c}{Pre-treatment} & \multicolumn{4}{c}{Post-treatment} \\
+      \cmidrule(lr){2-5} \cmidrule(lr){6-9}
+      Region & Mean & S.D. & Min & Max & Mean & S.D. & Min & Max \\
+      \midrule
+      North      & 12.4 & 3.1 & 5.2 & 21.8 & 14.9 & 3.4 & 6.0 & 25.1 \\
+      South      & 10.8 & 2.7 & 4.1 & 18.6 & 13.2 & 2.9 & 5.3 & 22.0 \\
+      East       & 15.6 & 4.0 & 6.8 & 27.3 & 17.1 & 4.2 & 7.4 & 29.8 \\
+      West       & 11.1 & 2.5 & 4.9 & 17.4 & 12.7 & 2.6 & 5.1 & 19.9 \\
+      Central    & 13.7 & 3.3 & 5.7 & 23.0 & 15.8 & 3.6 & 6.5 & 26.4 \\
+      \midrule
+      All        & 12.7 & 3.1 & 4.1 & 27.3 & 14.7 & 3.3 & 5.1 & 29.8 \\
+      \bottomrule
+    \end{tabular}
+  \end{table}
+\end{landscape}
+
+\section{Rotated text within an upright cell}
+\label{sec:rotbox}
+
+A finer-grained form of rotation turns a single span of text through ninety
+degrees without rotating the surrounding page or float. \Cref{tab:rotbox} places
+a vertically rotated row label in the left column of an otherwise ordinary
+upright table, a layout often used when a long category name must head a narrow
+column. The rotation is produced by \verb|\rotatebox{90}{...}| applied to the
+cell contents.
+
+\begin{table}[ht]
+  \centering
+  \caption{An upright table whose left-hand row label is rotated ninety degrees
+    in place with \texttt{rotatebox}, while the remaining cells are set
+    horizontally.}
+  \label{tab:rotbox}
+  \begin{tabular}{c l r}
+    \toprule
+    & Indicator & Value \\
+    \midrule
+    \multirow{3}{*}{\rotatebox{90}{\textbf{Quarter 1}}}
+      & Revenue (\$m)      & 48.2 \\
+      & Operating margin   & 0.19 \\
+      & Headcount          & 312  \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+\section{Discussion}
+\label{sec:discussion}
+
+The three devices serve complementary purposes. A \texttt{sidewaysfigure} such as
+\cref{fig:rotated} rotates a floating object while leaving the page in portrait
+orientation, which keeps the running text upright on the same physical page. A
+\texttt{landscape} block, used for \cref{tab:wide}, rotates the entire page and is
+therefore appropriate when the wide object should stand alone. An in-cell
+\verb|\rotatebox|, illustrated by the row label of \cref{tab:rotbox}, rotates only
+a short span and integrates with surrounding horizontal text. A conversion
+pipeline must preserve the caption text, the label-based numbering, and the
+intended orientation of each of \cref{fig:rotated}, \cref{tab:wide}, and
+\cref{tab:rotbox}.
+
+\end{document}

@@ -1,0 +1,142 @@
+\documentclass[11pt]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{amsmath}
+\usepackage{enumitem}
+\usepackage[colorlinks=true,linkcolor=blue,citecolor=blue,urlcolor=blue]{hyperref}
+\usepackage[nameinlink,noabbrev]{cleveref}
+
+\title{Deeply Nested Lists and Sectioning Stress Paper}
+\author{Stage Two Corpus}
+\date{}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+This fixture exercises list and sectioning structures that frequently lose their
+hierarchy during conversion. It contains a three-level nesting of an enumerate
+inside an itemize inside an enumerate, a description list with bold run-in term
+labels, low-level sectioning down to subsubsection depth, paragraph and
+subparagraph headings followed by real text, inline mathematics embedded inside
+list items, and cross-references that resolve both to sections and to an
+individually labelled enumerate item. The prose is substantive so that a
+text-difference metric over the body remains informative.
+\end{abstract}
+
+\section{Review Protocol}
+\label{sec:protocol}
+
+The review protocol is organised as a hierarchy of stages, sub-tasks, and
+checks. The outermost layer is an ordered list of stages; within a stage the
+operative sub-tasks form an unordered list; and within a sub-task the concrete
+checks are again ordered. This arrangement produces three levels of nesting and
+is the central structure under test in \cref{sec:protocol}.
+
+\begin{enumerate}[label=\arabic*.]
+\item \textbf{Intake.} The reviewer confirms that each record is admissible
+  before any outcome data are inspected. The admissible sample size is
+  $n_0 \leq n$, where $n$ is the raw count of submitted records.
+  \begin{itemize}
+  \item Structural fields are validated against the intake schema:
+    \begin{enumerate}[label=(\roman*)]
+    \item the site identifier is present and resolves to a known site;
+    \item the submission timestamp lies inside the collection window
+      $[t_0, t_1]$; \label{item:window}
+    \item the record carries a reviewer initial recognised by the roster.
+    \end{enumerate}
+  \item Content fields are screened for completeness, with any field whose
+    missingness exceeds the cutoff $m^{\ast} = 0.10$ flagged for a second pass.
+  \end{itemize}
+\item \textbf{Adjudication.} Flagged records are escalated and resolved under a
+  fixed decision rule.
+  \begin{itemize}
+  \item Duplicate initials are reconciled against the supervisor code before the
+    record advances.
+  \item Borderline eligibility is decided by majority among three readers, so a
+    record is retained when at least $\lceil 3/2 \rceil = 2$ readers agree.
+  \end{itemize}
+\item \textbf{Sign-off.} The final analytic status is recorded, after which the
+  record is locked and the outcome fields become readable.
+\end{enumerate}
+
+The timestamp condition in \cref{item:window} is the single most common cause of
+rejection at intake, because submissions assembled before the collection window
+opens are silently discarded by the upstream system.
+
+\section{Definitions and Roles}
+\label{sec:definitions}
+
+The following description list assigns a bold run-in label to each defined term.
+Run-in labels are a frequent point of failure in conversion because the label
+must remain on the same line as the explanatory text that follows it.
+
+\begin{description}
+\item[Reviewer] An individual who performs the intake and adjudication tasks of
+  \cref{sec:protocol} and whose initials appear in the audit log.
+\item[Supervisor] A reviewer with the additional authority to reconcile
+  duplicate initials and to break ties during adjudication.
+\item[Collection window] The closed interval $[t_0, t_1]$ during which a
+  submission is considered timely; submissions outside the interval are
+  inadmissible at intake.
+\item[Analytic status] The terminal label assigned at sign-off, which fixes
+  whether a record enters the analysis sample.
+\end{description}
+
+\subsection{Operational Notes}
+\label{sec:opnotes}
+
+This subsection records operational details that elaborate the roles defined in
+\cref{sec:definitions}. The notes are written as ordinary prose so that
+sectioning depth is exercised without relying on further lists.
+
+\subsubsection{Escalation Path}
+\label{sec:escalation}
+
+When a record cannot be resolved by the assigned reviewer, it follows a fixed
+escalation path to the supervisor. The escalation is logged with a timestamp,
+and the supervisor's resolution overrides the original disposition. This
+subsubsection establishes the deepest standard sectioning level in the document,
+and \cref{sec:escalation} is referenced again in the closing section to confirm
+that low-level section labels survive conversion.
+
+\paragraph{Logging convention.}
+Every escalation writes one line to the audit log. The line contains the record
+identifier, the originating reviewer, the supervisor, and the resolution code,
+in that fixed order. A paragraph heading is used here, with substantive text
+immediately following the heading on the same logical block, because run-in
+paragraph titles are a known source of conversion drift.
+
+\subparagraph{Retention rule.}
+A logged escalation is retained for the full retention horizon $H$ even after the
+parent record is locked, so that the resolution remains auditable. The
+subparagraph heading is the lowest heading level in the document and is included
+specifically to test whether the converter preserves the distinction between a
+paragraph and a subparagraph.
+
+\section{Worked Counts}
+\label{sec:counts}
+
+The protocol of \cref{sec:protocol} produces several counts that can be checked
+arithmetically. The list below embeds inline mathematics inside each item so
+that short formulas must survive within list structures.
+
+\begin{enumerate}[label=(\alph*)]
+\item The retained fraction at intake is
+  $r = n_0 / n$, which lies in the unit interval $0 \leq r \leq 1$.
+\item A record advances past adjudication when at least two of three readers
+  agree, an event whose count is $k \in \{2, 3\}$.
+\item The number of distinct sites observed is
+  $s = \lvert \{\, \text{site}(i) : i \in \text{sample} \,\} \rvert$, which is
+  bounded above by the number of registered sites.
+\end{enumerate}
+
+These quantities connect the structural rules of \cref{sec:protocol} to the
+definitions of \cref{sec:definitions}, and the escalation logging of
+\cref{sec:escalation} ensures that every adjudication decision underlying item
+(b) is recoverable from the audit log. The timestamp gate first introduced in
+\cref{item:window} therefore propagates through the entire pipeline, from intake
+counts through to the retained analytic sample.
+
+\end{document}

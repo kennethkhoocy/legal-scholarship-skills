@@ -1,0 +1,61 @@
+\documentclass[11pt]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage{acronym}
+\usepackage{booktabs}
+
+\title{Acronym Expansion Stress Case}
+\author{Test Corpus}
+\date{}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+This fixture tests first-use acronym expansion with the \texttt{acronym} package
+and combines the expansions with ordinary section and table cross-references.
+\end{abstract}
+
+\section{Acronym Register}
+\label{sec:register}
+
+\begin{acronym}[SUTVA]
+\acro{ATE}{average treatment effect}
+\acro{RCT}{randomized controlled trial}
+\acro{SUTVA}{stable unit treatment value assumption}
+\end{acronym}
+
+\section{Identification Language}
+\label{sec:identification}
+
+The first reference to an \ac{RCT} should expand the term before showing the
+short form. The first reference to the \ac{ATE} should behave similarly. Later
+references to the \ac{RCT} and the \ac{ATE} should use the short forms because
+the terms have already appeared in the document.
+
+The design discussion also invokes \ac{SUTVA}. Section~\ref{sec:register}
+contains the acronym list, and Table~\ref{tab:acronym-check} summarizes the
+terms used in the paper.
+
+\begin{table}[htbp]
+\centering
+\caption{Acronyms used in the fixture}
+\label{tab:acronym-check}
+\begin{tabular}{ll}
+\toprule
+Short form & Concept \\
+\midrule
+\acs{RCT} & Trial design \\
+\acs{ATE} & Causal estimand \\
+\acs{SUTVA} & Interference condition \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\section{Conclusion}
+\label{sec:conclusion}
+
+The final paragraph refers again to \ac{SUTVA}, which should now appear in short
+form. This gives the staged corpus a compact test for package-managed acronym
+state across sections.
+
+\end{document}

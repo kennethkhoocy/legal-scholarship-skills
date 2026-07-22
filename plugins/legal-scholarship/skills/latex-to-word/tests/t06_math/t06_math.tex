@@ -1,0 +1,63 @@
+\documentclass[11pt]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+
+\newtheorem{theorem}{Theorem}
+
+\title{Mathematics Stress Case}
+\author{Test Corpus}
+\date{}
+
+\begin{document}
+\maketitle
+
+Inline mathematics such as $x_i \in \mathbb{R}$ and $\alpha+\beta=1$ should
+remain editable after conversion. The display equation in \eqref{eq:loss}
+provides a label for later cross-reference.
+
+\begin{align}
+L(\theta)
+  &= \sum_{i=1}^{n} \left(y_i - x_i^{\top}\theta\right)^2
+     + \lambda \lVert \theta \rVert_2^2 \label{eq:loss}\\
+\frac{\partial L}{\partial \theta}
+  &= -2X^{\top}(y-X\theta)+2\lambda\theta.
+\end{align}
+
+The decision rule can be written as a cases expression:
+\[
+d(x)=
+\begin{cases}
+1, & \text{if } x^{\top}\theta \geq \tau,\\
+0, & \text{if } x^{\top}\theta < \tau.
+\end{cases}
+\]
+
+The same notation appears in a small matrix:
+\[
+M =
+\begin{bmatrix}
+1 & \rho & 0\\
+\rho & 1 & \rho\\
+0 & \rho & 1
+\end{bmatrix}.
+\]
+
+\begin{theorem}
+\label{thm:ridge}
+If $X^{\top}X+\lambda I$ is nonsingular and $\lambda>0$, the minimizer of
+\eqref{eq:loss} is unique.
+\end{theorem}
+
+\begin{proof}
+The Hessian of $L(\theta)$ is $2X^{\top}X+2\lambda I$. For any nonzero vector
+$v$, the quadratic form is
+\[
+v^{\top}(2X^{\top}X+2\lambda I)v = 2\lVert Xv\rVert_2^2+2\lambda\lVert v\rVert_2^2,
+\]
+which is strictly positive because $\lambda>0$. Strict convexity gives a unique
+minimizer.
+\end{proof}
+
+\end{document}

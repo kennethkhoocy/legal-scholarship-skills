@@ -1,0 +1,56 @@
+\documentclass[11pt]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{amsmath}
+\usepackage[colorlinks=true,linkcolor=blue,citecolor=blue,urlcolor=blue]{hyperref}
+\usepackage[acronym,toc,nopostdot]{glossaries}
+\usepackage[nameinlink,noabbrev]{cleveref}
+
+\makenoidxglossaries
+\let\printindexedglossaries\printglossaries
+\let\printglossaries\printnoidxglossaries
+
+\newglossaryentry{calibration}{
+  name={calibration},
+  description={the agreement between predicted probabilities and observed frequencies within comparable groups}
+}
+
+\newglossaryentry{threshold}{
+  name={threshold},
+  description={a decision boundary applied to a continuous score}
+}
+
+\newglossaryentry{loss}{
+  name={loss},
+  description={a scalar objective that penalizes prediction errors and unstable classifications}
+}
+
+\newacronym{ate}{ATE}{average treatment effect}
+\newacronym{roc}{ROC}{receiver operating characteristic}
+\newacronym{dgp}{DGP}{data-generating process}
+
+\title{Glossary and Acronym Conversion Stress Paper}
+\author{Stage Two Corpus}
+\date{}
+
+\begin{document}
+\maketitle
+
+\section{Terminology}
+
+The first use of an acronym should expand in running text, as in \gls{ate}, while a later use such as \gls{ate} should use the shortened form. The same pattern appears for \gls{roc} curves and later \gls{roc} diagnostics. This behavior is sensitive to package state because the first-use expansion is computed during compilation.
+
+Glossary terms have a related conversion challenge. A model may use a \gls{threshold} for classification, then revise the \gls{threshold} after observing drift in the \gls{dgp}. In contrast, a \gls{loss} function remains a mathematical object, for example
+\[
+  \ell(\hat{p},y)= -y\log(\hat{p})-(1-y)\log(1-\hat{p}).
+\]
+The glossary entry for \gls{calibration} should be listed with its definition, and subsequent mentions of \gls{calibration} should remain concise in the prose.
+
+\section{Reference Use}
+
+The paper deliberately invokes each entry more than once. It uses \gls{dgp} in the first sentence of this section and then refers to the \gls{dgp} again after defining the relevant score. The generated glossary and acronym lists below are part of the expected output surface.
+
+\printglossaries
+
+\end{document}

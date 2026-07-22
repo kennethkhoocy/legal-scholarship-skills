@@ -1,0 +1,170 @@
+\documentclass[11pt]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath}
+\usepackage{booktabs}
+\usepackage{graphicx}
+\usepackage{natbib}
+\usepackage{cleveref}
+
+\graphicspath{{figures/}}
+
+\title{Mixed Academic Paper Stress Case}
+\author{Test Corpus}
+\date{}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+This paper-style fixture combines numbered sections, cross-references, equations,
+footnotes, a raster figure, a booktabs table, and a BibTeX bibliography. The
+content is synthetic, but its structure resembles a compact empirical manuscript.
+\end{abstract}
+
+\section{Introduction}
+\label{sec:introduction}
+
+Academic conversion workflows are usually evaluated on a narrow set of examples.
+This fixture uses a broader paper form in which prose, references, and floating
+elements are interleaved across several pages. The design follows common article
+conventions because many Word submissions retain the logical structure of the
+LaTeX source while reflowing the exact page breaks.
+
+The motivating setting is a multi-site program that introduced a scheduling
+protocol across offices. Sites began with different administrative routines, which
+creates variation in baseline completion and follow-up. The synthetic data in
+this document have no empirical claim, although they make the source realistic
+enough to exercise citation, footnote, and cross-reference handling. The notation
+in \cref{sec:model} is intentionally simple so that equation conversion can be
+checked without a specialized mathematical context.
+
+Prior work on empirical design emphasizes clear descriptions of assignment and
+measurement \citep{angrist2009mostly}. Reporting guidance also stresses that
+tables and figures should remain interpretable when documents are moved between
+formats \citep{gentzkow2014code}. This point matters for collaborative editing
+because co-authors often review the Word file rather than the compiled PDF.
+
+The introduction includes a real footnote to verify that body footnotes survive
+the conversion path.\footnote{This is a body footnote with ordinary prose and an
+inline expression, $n=48$.} A second footnote appears later in the paper so that
+numbering can be inspected across sections.
+
+\section{Research Design}
+\label{sec:design}
+
+The program introduced a standardized appointment sequence after an initial
+baseline period. Offices retained discretion over local staffing, but the
+sequence specified when reminders should be sent and when supervisors should
+review delayed cases. The resulting design is presented as a compact panel of
+site-period observations. The fixture uses this language because it creates
+natural opportunities for equations, tables, and figure references in the same
+document.
+
+\begin{table}[htbp]
+\centering
+\caption{Baseline balance across synthetic sites}
+\label{tab:balance}
+\begin{tabular}{lccc}
+\toprule
+Measure & Early sites & Later sites & Difference \\
+\midrule
+Average weekly cases & 42.8 & 41.3 & 1.5 \\
+Completion rate & 0.64 & 0.62 & 0.02 \\
+Supervisor review rate & 0.31 & 0.34 & -0.03 \\
+Missing contact share & 0.08 & 0.09 & -0.01 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\cref{tab:balance} reports baseline characteristics for the synthetic site
+groups. The table is small, but it includes the rule structure that often matters
+for journal-formatted empirical papers. The columns contain both counts and
+proportions so that decimal formatting appears alongside text labels.
+
+The figure in \cref{fig:workflow} summarizes the assumed process. It is stored as
+a local PNG to test figure resolution, media embedding, and caption placement.
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.74\linewidth]{workflow.png}
+\caption{Synthetic scheduling workflow}
+\label{fig:workflow}
+\end{figure}
+
+The process begins with an intake record, moves to a reminder stage, and ends
+with either completion or supervisory review. The figure provides a deliberately
+simple visual target so that discrepancies in scaling or placement are easy to
+notice in side-by-side PDF inspection.
+
+\section{Model}
+\label{sec:model}
+
+Let $Y_{it}$ denote the completion rate for site $i$ in period $t$. The main
+specification is
+\begin{equation}
+Y_{it}=\alpha_i+\gamma_t+\beta D_{it}+X_{it}^{\top}\delta+\varepsilon_{it},
+\label{eq:objective}
+\end{equation}
+where $D_{it}$ indicates exposure to the standardized sequence. The coefficient
+$\beta$ is the parameter of interest in \cref{eq:objective}. The specification is
+included to cover editable display equations and cross-references produced by
+cleveref.
+
+For descriptive reporting, the fixture also defines a normalized index:
+\begin{align}
+Z_{it}
+  &= \frac{Y_{it}-\bar{Y}_{0}}{s_{0}},\\
+\widehat{\Delta}
+  &= \frac{1}{N_1}\sum_{i,t:D_{it}=1} Z_{it}
+     - \frac{1}{N_0}\sum_{i,t:D_{it}=0} Z_{it}.
+\end{align}
+These equations create multi-line mathematical content while remaining close to
+ordinary applied notation.
+
+\section{Results}
+\label{sec:results}
+
+The estimated values are intentionally moderate. A short discussion follows to
+force the document beyond a single page and to test page-level rendering in the
+harness. The fixture refers back to \cref{sec:design}, \cref{tab:balance}, and
+\cref{fig:workflow} so that the auxiliary file contains references of several
+types.
+
+The first result is that completion increases after the standardized sequence is
+introduced. The second result is that supervisory review becomes more frequent in
+sites with larger initial backlogs, which is consistent with the intended
+workflow. These statements are synthetic and should be read only as conversion
+content. Their value for the test suite lies in the density of ordinary academic
+structure around them.\footnote{The second body footnote appears after the table
+and figure references, allowing later footnote numbering to be checked.}
+
+Additional prose extends the fixture to several pages. The conversion path should
+preserve section headings, ordinary paragraphs, citations, footnotes, equation
+numbers, and captions even when the Word output reflows differently from the PDF.
+The compiled file remains the visual reference, while the Word document provides
+an editable representation suitable for review.
+
+The paper form also exercises bibliography placement. The final section cites a
+methods reference again \citep{imbens2015causal} and then prints the bibliography
+through standard BibTeX commands. The combination of \verb|\cref| commands and
+natbib citations gives the converter a mixed reference workload.
+
+\section{Conclusion}
+\label{sec:conclusion}
+
+This mixed fixture is meant to be ordinary rather than exotic. It contains enough
+structure to expose failures in floats, references, footnotes, equations, and
+bibliography handling, while each individual element remains small enough for
+manual inspection. The harness records page counts and conversion summaries so
+that repeated runs can be compared without changing the source files.
+
+The conclusion adds another paragraph to stabilize page length. Reviewers can
+compare \cref{eq:objective}, \cref{tab:balance}, and \cref{fig:workflow} between
+the compiled PDF and the rendered Word PDF. Differences in exact pagination are
+expected in a reflowed Word document, but missing elements or unresolved commands
+should be visible in the rasterized outputs.
+
+\bibliographystyle{plainnat}
+\bibliography{refs}
+
+\end{document}

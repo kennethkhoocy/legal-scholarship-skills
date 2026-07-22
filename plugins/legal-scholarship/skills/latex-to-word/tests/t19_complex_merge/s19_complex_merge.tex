@@ -1,0 +1,56 @@
+\documentclass[11pt]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage{booktabs}
+\usepackage{multirow}
+\usepackage{array}
+
+\title{Complex Merged Table Stress Case}
+\author{Test Corpus}
+\date{}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+This fixture combines row spans, grouped column headers, partial rules, and
+multicolumn summary cells. The table is designed to exercise merged-cell
+semantics in a standard academic reporting layout.
+\end{abstract}
+
+\section{Merged-Cell Layout}
+\label{sec:merged-layout}
+
+The table reports synthetic baseline and follow-up measures by cohort and study
+arm. Header groups use \texttt{\textbackslash multicolumn} with
+\texttt{\textbackslash cmidrule}, while cohort labels use
+\texttt{\textbackslash multirow} across treatment arms.
+
+\begin{table}[htbp]
+\centering
+\caption{Synthetic outcomes with row and column merges}
+\label{tab:complex-merge}
+\begin{tabular}{llrrrrrr}
+\toprule
+\multirow{2}{*}{Cohort} & \multirow{2}{*}{Arm} & \multicolumn{3}{c}{Baseline} & \multicolumn{3}{c}{Follow-up} \\
+\cmidrule(lr){3-5}\cmidrule(lr){6-8}
+ &  & $N$ & Mean & S.D. & $N$ & Mean & S.D. \\
+\midrule
+\multirow{2}{*}{2019}
+  & Control & 82 & 0.41 & 0.18 & 79 & 0.44 & 0.19 \\
+  & Treated & 86 & 0.42 & 0.17 & 84 & 0.53 & 0.18 \\
+\midrule
+\multirow{2}{*}{2020}
+  & Control & 91 & 0.39 & 0.20 & 88 & 0.43 & 0.21 \\
+  & Treated & 94 & 0.40 & 0.19 & 92 & 0.52 & 0.20 \\
+\midrule
+\multicolumn{2}{l}{Pooled treated-control difference}
+  & \multicolumn{3}{c}{0.01} & \multicolumn{3}{c}{0.09} \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+Table~\ref{tab:complex-merge} creates genuine merged cells in both directions.
+The final row also spans several columns, which gives later conversion checks a
+clear target for summary rows.
+
+\end{document}

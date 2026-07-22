@@ -1,0 +1,85 @@
+\documentclass[10pt]{article}
+\usepackage[margin=0.75in]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{array}
+\usepackage{booktabs}
+\usepackage{longtable}
+\usepackage{multirow}
+\usepackage[colorlinks=true,linkcolor=blue,citecolor=blue,urlcolor=blue]{hyperref}
+\usepackage[nameinlink,noabbrev]{cleveref}
+
+\renewcommand{\arraystretch}{1.16}
+\setlength{\tabcolsep}{5pt}
+
+\newcommand{\GroupRows}[5]{%
+\multirow{4}{*}{#1} & Spec. $S_{#2,1}$ & $\beta_{#2,1}=#3$ & Share $q_{#2,1}=#4\%$ & #5\\
+& Spec. $S_{#2,2}$ & $\beta_{#2,2}=#3+\delta$ & Share $q_{#2,2}=#4\%$ & #5\\
+& Spec. $S_{#2,3}$ & $\beta_{#2,3}=#3-\epsilon_{#2}$ & Share $q_{#2,3}=#4\%$ & #5\\
+& Spec. $S_{#2,4}$ & $\beta_{#2,4}=\bar{\beta}_{#2}$ & Share $q_{#2,4}=#4\%$ & #5\\
+\midrule
+}
+
+\title{Longtable with Inline Math Stress Paper}
+\author{Stage Two Corpus}
+\date{}
+
+\begin{document}
+\maketitle
+
+\section{Purpose}
+
+\Cref{tab:long-math} is intentionally long enough to cross page boundaries. Each body row contains inline mathematics, subscripts, and percentage signs, while the first column uses a multirow cohort label. The repeated panel structure is designed to expose pagination, row-height, and math-preservation issues during conversion.
+
+\begin{longtable}{@{}p{1.55cm}p{2.7cm}p{3.05cm}p{3.05cm}r@{}}
+\caption{Multi-page longtable with inline mathematical cells}
+\label{tab:long-math}\\
+\toprule
+Cohort & Model & Effect cell & Share cell & $n$ \\
+\midrule
+\endfirsthead
+\caption[]{Multi-page longtable with inline mathematical cells (continued)}\\
+\toprule
+Cohort & Model & Effect cell & Share cell & $n$ \\
+\midrule
+\endhead
+\midrule
+\multicolumn{5}{r}{Continued on next page}\\
+\endfoot
+\bottomrule
+\endlastfoot
+\GroupRows{Cohort 01}{1}{0.11}{4}{120}
+\GroupRows{Cohort 02}{2}{0.13}{5}{132}
+\GroupRows{Cohort 03}{3}{0.15}{6}{144}
+\GroupRows{Cohort 04}{4}{0.17}{7}{156}
+\GroupRows{Cohort 05}{5}{0.19}{8}{168}
+\GroupRows{Cohort 06}{6}{0.21}{9}{180}
+\GroupRows{Cohort 07}{7}{0.23}{10}{192}
+\GroupRows{Cohort 08}{8}{0.25}{11}{204}
+\GroupRows{Cohort 09}{9}{0.27}{12}{216}
+\GroupRows{Cohort 10}{10}{0.29}{13}{228}
+\GroupRows{Cohort 11}{11}{0.31}{14}{240}
+\GroupRows{Cohort 12}{12}{0.33}{15}{252}
+\GroupRows{Cohort 13}{13}{0.35}{16}{264}
+\GroupRows{Cohort 14}{14}{0.37}{17}{276}
+\GroupRows{Cohort 15}{15}{0.39}{18}{288}
+\GroupRows{Cohort 16}{16}{0.41}{19}{300}
+\GroupRows{Cohort 17}{17}{0.43}{20}{312}
+\GroupRows{Cohort 18}{18}{0.45}{21}{324}
+\GroupRows{Cohort 19}{19}{0.47}{22}{336}
+\GroupRows{Cohort 20}{20}{0.49}{23}{348}
+\GroupRows{Cohort 21}{21}{0.51}{24}{360}
+\GroupRows{Cohort 22}{22}{0.53}{25}{372}
+\GroupRows{Cohort 23}{23}{0.55}{26}{384}
+\GroupRows{Cohort 24}{24}{0.57}{27}{396}
+\GroupRows{Cohort 25}{25}{0.59}{28}{408}
+\GroupRows{Cohort 26}{26}{0.61}{29}{420}
+\GroupRows{Cohort 27}{27}{0.63}{30}{432}
+\GroupRows{Cohort 28}{28}{0.65}{31}{444}
+\GroupRows{Cohort 29}{29}{0.67}{32}{456}
+\GroupRows{Cohort 30}{30}{0.69}{33}{468}
+\end{longtable}
+
+The continuation head and foot are part of the fixture. They help determine whether repeated headers and longtable pagination metadata survive the conversion path.
+
+\end{document}

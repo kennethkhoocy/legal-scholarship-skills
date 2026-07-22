@@ -1,0 +1,73 @@
+\documentclass[11pt]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage{graphicx}
+\usepackage{wrapfig}
+\usepackage{booktabs}
+
+\title{Wrapped Figure Stress Case}
+\author{Test Corpus}
+\date{}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+This fixture isolates a text-wrapped raster figure in a compact academic paper.
+The image is deliberately small so that placement, caption flow, and paragraph
+wrapping can be inspected without relying on a large external asset.
+\end{abstract}
+
+\section{Motivation}
+\label{sec:motivation}
+
+Empirical manuscripts often use small diagrams beside narrative explanations,
+especially when the figure clarifies a classification rule or measurement
+sequence. The conversion path should preserve the local relationship between the
+figure and the surrounding paragraph because the meaning of the text depends on
+that spatial arrangement.
+
+\begin{wrapfigure}{r}{0.34\textwidth}
+\vspace{-0.75\baselineskip}
+\centering
+\includegraphics[width=0.31\textwidth]{figures/wrapped_signal.png}
+\caption{A compact diagnostic signal}
+\label{fig:wrapped-signal}
+\vspace{-0.5\baselineskip}
+\end{wrapfigure}
+
+The right-wrapped figure in Figure~\ref{fig:wrapped-signal} represents a small
+diagnostic signal used during record review. The prose around the image is long
+enough to flow above, beside, and below the figure, which creates a useful test
+for line wrapping in conversion. A faithful output should keep the caption close
+to the image and should avoid treating the surrounding sentences as an unrelated
+block of text. The content is synthetic, but the layout resembles the compact
+figures often placed near case definitions in applied research reports.
+
+The review protocol classifies observations using a simple threshold. Values
+above the horizontal reference line trigger a second check, while values below
+the line remain in the primary analytic sample. This sentence extends the wrapped
+region so that the final lines rejoin the full text width after the figure ends.
+
+\section{Summary Table}
+\label{sec:summary}
+
+\begin{table}[htbp]
+\centering
+\caption{Synthetic review categories}
+\label{tab:categories}
+\begin{tabular}{lcc}
+\toprule
+Category & Records & Share \\
+\midrule
+Primary analytic sample & 184 & 0.74 \\
+Secondary review & 51 & 0.21 \\
+Deferred classification & 12 & 0.05 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+Table~\ref{tab:categories} supplies a conventional floating table after the
+wrapped figure. The combination helps distinguish failures in ordinary floats
+from failures specific to the wrapfig environment.
+
+\end{document}

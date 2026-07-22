@@ -1,0 +1,99 @@
+\documentclass[11pt]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{amsmath}
+\usepackage{graphicx}
+\usepackage{subfig}
+\usepackage{cleveref}
+
+% subfig (Cohen) is the older sibling of subcaption and uses a different
+% command surface: \subfloat[<caption>]{<body>} rather than the subfigure
+% environment. This fixture exercises that surface together with
+% \ContinuedFloat, which lets a second float reuse the first float's number.
+
+\crefname{subfigure}{panel}{panels}
+\Crefname{subfigure}{Panel}{Panels}
+
+\title{Panelized Displays with the \texttt{subfig} Package}
+\author{Test Corpus}
+\date{}
+
+\begin{document}
+\maketitle
+
+\section{Introduction}
+
+This fixture isolates the \texttt{subfig} package, which predates
+\texttt{subcaption} and remains common in legacy manuscripts and in journal
+templates that have not migrated. The two packages are mutually exclusive and
+expose different syntax: \texttt{subfig} provides the \verb|\subfloat| command,
+whereas \texttt{subcaption} provides a \texttt{subfigure} environment. A
+converter that special-cases only the environment form will silently drop the
+panels produced here, so the fixture is meant to surface that gap. None of the
+panels depend on external raster files; each is a fixed-size \verb|\framebox|
+whose interior strut reserves vertical space, which keeps the document
+self-contained under \texttt{pdflatex}.
+
+\Cref{fig:panels} collects three panels in a single figure float. Each panel
+carries an independent caption and label, while the enclosing float supplies a
+common caption and its own label. The companion display in
+\cref{fig:panels-cont} reuses the same figure number through
+\verb|\ContinuedFloat|, so the two appear to a reader as one logical figure
+split across a page boundary.
+
+\section{A three-panel float}
+
+\begin{figure}[htbp]
+\centering
+\subfloat[Increasing series\label{fig:panel-a}]{%
+  \framebox[3.4cm][c]{\rule{0pt}{2.6cm}Panel A}}
+\hfill
+\subfloat[Grouped bars\label{fig:panel-b}]{%
+  \framebox[3.4cm][c]{\rule{0pt}{2.6cm}Panel B}}
+\hfill
+\subfloat[Residual scatter\label{fig:panel-c}]{%
+  \framebox[3.4cm][c]{\rule{0pt}{2.6cm}Panel C}}
+\caption{Three placeholder panels typeset with \texttt{subfig}. The panel
+  bodies are fixed-width boxes rather than images so the fixture compiles
+  without any external graphics.}
+\label{fig:panels}
+\end{figure}
+
+The panels are cross-referenced individually to verify that subpanel labels
+resolve through \texttt{cleveref}. \Cref{fig:panel-a} shows the increasing
+series, \cref{fig:panel-b} shows the grouped bars, and \cref{fig:panel-c} shows
+the residual scatter. A combined reference such as
+\cref{fig:panel-a,fig:panel-b,fig:panel-c} should expand into a list of panel
+identifiers, confirming that the subpanel counter and the \texttt{cleveref}
+name mapping agree.
+
+\section{A continued float}
+
+\begin{figure}[htbp]
+\ContinuedFloat
+\centering
+\subfloat[Diagnostic histogram\label{fig:panel-d}]{%
+  \framebox[3.4cm][c]{\rule{0pt}{2.6cm}Panel D}}
+\hfill
+\subfloat[Quantile plot\label{fig:panel-e}]{%
+  \framebox[3.4cm][c]{\rule{0pt}{2.6cm}Panel E}}
+\caption{Continuation of the preceding figure. Because the float begins with
+  \texttt{\textbackslash ContinuedFloat}, it shares the figure number of
+  \cref{fig:panels} and is conventionally read as ``(cont.)''.}
+\label{fig:panels-cont}
+\end{figure}
+
+\section{Discussion}
+
+The continuation in \cref{fig:panels-cont} adds two further panels,
+\cref{fig:panel-d} and \cref{fig:panel-e}, under the shared figure number. The
+substantive point for a fidelity test is that the panel-level structure and the
+two-part numbering both carry meaning that a flat extraction would lose: a
+reader who sees only ``Figure~1'' and ``Figure~1 (cont.)'' still expects five
+labelled panels, A through E, to be addressable in the surrounding prose. When
+the panels themselves are images, the same structure governs how alt text and
+captions should be associated, so preserving the \verb|\subfloat| grouping
+matters independently of whether the bodies are boxes or figures.
+
+\end{document}

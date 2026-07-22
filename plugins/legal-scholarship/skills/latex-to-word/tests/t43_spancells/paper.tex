@@ -1,0 +1,105 @@
+\documentclass[11pt]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{amsmath}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{multirow}
+\usepackage{cleveref}
+
+% Significance stars rendered as a superscript, the estout/esttab convention.
+\newcommand{\sym}[1]{\textsuperscript{#1}}
+
+\title{A Two-Dimensional Cross-Tabulation with Merged Cells}
+\author{Test Corpus}
+\date{}
+
+\begin{document}
+\maketitle
+
+\section{Introduction}
+\label{sec:intro}
+
+This fixture exercises the single hardest table layout in the corpus: a booktabs
+table that merges cells in both directions at once. The cross-tabulation in
+\cref{tab:crosstab} arranges three row groups against two column groups, so that
+column~1 carries vertical row-group labels built with \verb|\multirow| while the
+header carries horizontal column-group spanners built with \verb|\multicolumn|.
+The two devices interact at the top-left corner, where a stub head spans two
+header rows down and two stub columns across, and they must be reconciled by any
+converter that hopes to reproduce the grid.
+
+The header has three physical rows. The first row places two top-level spanners,
+``Pre-Reform'' across three estimate columns and ``Post-Reform'' across two, each
+underlined by a partial rule drawn with \verb|\cmidrule(lr)| so that the rule
+governs only its own block rather than the full table width. The second header
+row subdivides the pre-reform block with a nested \verb|\multicolumn| spanner,
+``By Tercile,'' that covers two of its three columns, leaving the third column
+heading free-standing. The third header row names the individual columns. A
+converter that flattens these levels will collapse the nested spanner into the
+column names and lose both \verb|\cmidrule| spans.
+
+\section{Cross-Tabulation}
+\label{sec:crosstab}
+
+\Cref{tab:crosstab} reports synthetic coefficients for eight specifications,
+organized as three row groups, namely Size, Liquidity, and a single pooled
+summary row that itself spans the two stub columns with a \verb|\multicolumn|.
+The row groups labelled Size and Liquidity each span three and two body rows
+respectively, so the \verb|\multirow| labels sit vertically centred against
+their member rows. The interaction estimand
+$\text{Treated}\times\text{Post}$ is stable across the pre- and post-reform
+blocks at roughly $\widehat{\beta}\approx 0.10$.
+
+\begin{table}[htbp]
+\centering
+\caption{Cross-tabulated difference-in-differences estimates by firm
+  characteristic group and reform period.}
+\label{tab:crosstab}
+\begin{tabular}{l l c c c c c}
+\toprule
+\multicolumn{2}{c}{\multirow{2}{*}{Characteristic}}
+  & \multicolumn{3}{c}{Pre-Reform} & \multicolumn{2}{c}{Post-Reform} \\
+\cmidrule(lr){3-5}\cmidrule(lr){6-7}
+\multicolumn{2}{c}{}
+  & \multicolumn{2}{c}{By Tercile} & Pooled & \multicolumn{2}{c}{By Tercile} \\
+\cmidrule(lr){3-4}
+Group & Subgroup & Low & High & All & Low & High \\
+\midrule
+\multirow{3}{*}{Size}
+  & Small      & 0.182\sym{**}  & 0.094\sym{*}   & 0.141\sym{**}  & 0.166\sym{**}  & 0.088\sym{*}   \\
+  & Medium     & 0.151\sym{**}  & 0.087\sym{*}   & 0.122\sym{**}  & 0.143\sym{**}  & 0.081         \\
+  & Large      & 0.118\sym{*}   & 0.072         & 0.099\sym{*}   & 0.121\sym{*}   & 0.069         \\
+\addlinespace
+\multirow{2}{*}{Liquidity}
+  & Thin       & 0.207\sym{***} & 0.103\sym{**}  & 0.158\sym{***} & 0.191\sym{***} & 0.097\sym{**}  \\
+  & Deep       & 0.096\sym{*}   & 0.058         & 0.079\sym{*}   & 0.102\sym{*}   & 0.061         \\
+\midrule
+\multicolumn{2}{l}{Pooled}
+  & 0.142\sym{**}  & 0.083\sym{*}   & 0.115\sym{**}  & 0.137\sym{**}  & 0.079\sym{*}   \\
+\bottomrule
+\addlinespace[2pt]
+\multicolumn{7}{l}{\footnotesize Standard errors suppressed for layout; cells are
+  the $\text{Treated}\times\text{Post}$ coefficient. \sym{*}~$p<0.10$,} \\
+\multicolumn{7}{l}{\footnotesize \sym{**}~$p<0.05$, \sym{***}~$p<0.01$.} \\
+\end{tabular}
+\end{table}
+
+\section{Discussion}
+\label{sec:discussion}
+
+The substantive reading of \cref{tab:crosstab} is that the interaction effect
+attenuates monotonically with firm size and with market depth, while remaining
+materially unchanged between the pre- and post-reform windows. For a fidelity
+test, however, the layout is the object of interest. Three failure modes are
+combined deliberately in one table rather than tested in isolation: a converter
+that drops the vertical \verb|\multirow| labels will leave the Size and Liquidity
+groups unlabelled against their member rows; one that flattens the stacked
+\verb|\multicolumn| header levels will merge the nested ``By Tercile'' spanner
+into the column names and discard the \verb|\cmidrule| partial rules; and one
+that ignores the trailing two-column summary row will lose the pooled estimates
+that anchor the bottom of the grid. Each is a distinct defect, and a faithful
+rendering must survive all three at once.
+
+\end{document}

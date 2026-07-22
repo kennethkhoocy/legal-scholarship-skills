@@ -1,0 +1,28 @@
+{
+  "style_id": "mcgill",
+  "display_name": "McGill Guide (9th ed.)",
+  "short_forms": {
+    "ibid_term": "\\textit{Ibid}",
+    "ibid_require_sole_citation": false,
+    "ibid_require_immediately_preceding": true,
+    "supra_template": "{signal}{author}, supra note {n}",
+    "supra_with_short_title_template": "{signal}{author}, \\textit{{{short_title}}}, supra note {n}",
+    "hereinafter_template": "[{author}, \\textit{{{short_title}}}]",
+    "use_hereinafter": true,
+    "et_al_threshold": 4,
+    "et_al_format": "{first_author} et al",
+    "two_author_format": "{first_author} \\& {second_author}"
+  },
+  "signals": [
+    "See generally", "See also", "But see",
+    "Compare", "Cf", "See", "See e.g."
+  ],
+  "merge": {
+    "separator": "; ",
+    "lowercase_signals_after_first": true,
+    "end_punctuation": "."
+  },
+  "llm_prompt_context": {
+    "short_form_description": "McGill Guide short-form: 'Ibid' (italicized, no period) for immediately preceding; 'supra note N' (roman, not italicized) for earlier references. Hereinafter uses bracket notation."
+  }
+}

@@ -1,0 +1,101 @@
+\documentclass[11pt]{article}
+
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+% Leave room in the right margin for marginalia and todo notes.
+\usepackage[margin=1in,marginparwidth=1.5in,marginparsep=0.2in]{geometry}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{marginnote}
+\usepackage{enumitem}
+\usepackage{todonotes}
+\usepackage{cleveref}
+
+\setlength{\marginparwidth}{1.5in}
+
+\title{Marginalia and Rich Footnotes as a Conversion Stress Case}
+\author{Test Corpus}
+\date{}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+This fixture concentrates the apparatus that academic writing pushes into the
+margins and the foot of the page: margin notes set with both \texttt{marginnote}
+and \texttt{marginpar}, a \texttt{todonotes} annotation, and footnotes that carry
+inline mathematics, a cross-reference, and an enumerated list. Each construct
+detaches content from the main text flow, so a faithful conversion must relocate
+that content correctly rather than dropping it or splicing it inline.
+\end{abstract}
+
+\section{Margin Notes}
+\label{sec:margins}
+
+Margin notes annotate the body text without interrupting it.\marginnote{Set with
+\texttt{marginnote}; unlike \texttt{marginpar} it does not float and may be used
+inside floats and footnotes.} The note beside this sentence is produced with
+\verb|\marginnote|, which places fixed text in the adjacent margin and, because it
+does not float, behaves predictably even in contexts where a floating note would
+fail. A second mechanism, \verb|\marginpar|, lets \LaTeX{} choose the margin and
+shift the note vertically to avoid collisions.\marginpar{\footnotesize A
+\texttt{marginpar} note, allowed to float to avoid overlap.} Both mechanisms
+share the property that their content is anchored to a point in the text but
+typeset outside the main column, which is precisely the relocation a converter
+must reproduce.
+
+\todo[inline]{Confirm that the inline todo note survives conversion as a visible,
+set-apart annotation rather than vanishing or merging into the body paragraph.}
+
+The annotation above is a \verb|\todo| note from the \texttt{todonotes} package.
+In the compiled article it is rendered as a colored, set-apart box, and it stands
+in for the editorial markers that pervade working drafts. \Cref{sec:footnotes}
+turns from the margins to the foot of the page.
+
+\section{Rich Footnotes}
+\label{sec:footnotes}
+
+Footnotes are the second channel by which scholarly prose offloads material from
+the main flow, and they frequently carry more than plain text. The footnote
+attached to this sentence contains inline mathematics and a cross-reference back
+into the body.\footnote{The estimator is unbiased, so its mean equals the target,
+$\mathbb{E}[\hat{\theta}] = \theta$, with sampling variance
+$\operatorname{Var}(\hat{\theta}) = \sigma^{2}/n$; this expands on the model named
+in \cref{sec:margins}.} Inline mathematics inside a footnote is a common source of
+conversion error, because the equation must remain mathematics even after the note
+is moved to its own region at the foot of the page.
+
+A footnote may also enumerate several items rather than running them together in a
+sentence.\footnote{Three conditions support the variance expression: %
+\begin{enumerate}[label=(\roman*),nosep,leftmargin=*]
+  \item the disturbances are uncorrelated across observations;
+  \item they share a common variance $\sigma^{2}$; and
+  \item the regressors are fixed in repeated sampling.
+\end{enumerate}}
+The list nested in that footnote tests whether enumerated structure is preserved
+when it appears in a footnote rather than in the body, a placement that some
+converters silently flatten.
+
+\section{Interaction}
+\label{sec:interaction}
+
+The preceding sections isolate each construct; this one places them in proximity
+to mirror a dense passage of real scholarship.\marginnote{\footnotesize Margin
+notes and footnotes routinely coexist in the same paragraph.} A claim in the body
+can carry a margin gloss while simultaneously anchoring a footnote that qualifies
+it,\footnote{Footnotes and margin notes use independent numbering and placement,
+so a converter must not conflate the two even when they originate from adjacent
+points in the source.} and an editorial \verb|\todo| may sit nearby to flag
+unfinished work.
+
+\todo[inline]{Verify that a second todo note, placed after the footnote-heavy
+paragraph, is still rendered distinctly and is not absorbed by the surrounding
+text.}
+
+Taken together, \cref{sec:margins,sec:footnotes,sec:interaction} establish that
+the document exercises marginalia, editorial annotations, and footnotes that
+themselves contain mathematics, cross-references, and lists. A faithful
+conversion must preserve each of these out-of-flow elements and keep the
+cross-references resolvable across the sections that house them.
+
+\end{document}

@@ -1,0 +1,63 @@
+\documentclass[11pt]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage{enumitem}
+\usepackage{booktabs}
+
+\title{Enumitem Custom Labels Stress Case}
+\author{Test Corpus}
+\date{}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+This fixture tests custom enumeration labels, nested alphabetic labels, and a
+resumed enumeration sequence using the \texttt{enumitem} package.
+\end{abstract}
+
+\section{Protocol Stages}
+\label{sec:protocol}
+
+The review protocol is expressed as a numbered sequence with roman numerals.
+The first block records screening tasks:
+\begin{enumerate}[label=(\roman*),series=review,leftmargin=*]
+\item verify that the intake form contains a site identifier;
+\item classify the record into the initial eligibility stratum;
+\item record the reviewer initials in the audit log.
+\end{enumerate}
+
+The third item includes a nested list with alphabetic labels:
+\begin{enumerate}[label=\alph*),leftmargin=2em]
+\item initials must match the reviewer roster;
+\item duplicate initials are resolved by the supervisor code.
+\end{enumerate}
+
+\section{Resumed Sequence}
+\label{sec:resumed}
+
+After the nested notes, the main review sequence resumes from the previous roman
+number:
+\begin{enumerate}[resume=review,label=(\roman*),leftmargin=*]
+\item reconcile flagged records against the supervisor notes;
+\item mark the final analytic status before outcome data are inspected.
+\end{enumerate}
+
+\begin{table}[htbp]
+\centering
+\caption{Synthetic enumeration audit}
+\label{tab:enum-audit}
+\begin{tabular}{lc}
+\toprule
+Checklist block & Items \\
+\midrule
+Initial roman sequence & 3 \\
+Nested alphabetic notes & 2 \\
+Resumed roman sequence & 2 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+The table summarizes the intended numbering structure for visual inspection
+after conversion.
+
+\end{document}

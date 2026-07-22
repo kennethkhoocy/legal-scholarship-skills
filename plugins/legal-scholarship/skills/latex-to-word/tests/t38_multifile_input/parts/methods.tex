@@ -1,0 +1,31 @@
+\section{Methods}
+\label{sec:methods}
+
+The analysis assumes a linear measurement model in which an observed response is
+a weighted combination of two inputs plus an additive disturbance. The weights
+and the noise scale are fixed in advance and collected in \cref{tab:params} so
+that the results section can refer to concrete values rather than abstract
+symbols. Holding these parameters constant lets the closed-form result in
+\cref{sec:results} be stated without further qualification.
+
+\begin{table}[htbp]
+\centering
+\caption{Fixed parameters of the measurement model.}
+\label{tab:params}
+\begin{tabular}{lcl}
+\toprule
+Symbol & Value & Interpretation \\
+\midrule
+$\beta_1$    & $0.60$ & weight on the first input \\
+$\beta_2$    & $0.25$ & weight on the second input \\
+$\sigma$     & $0.10$ & standard deviation of the disturbance \\
+$n$          & $500$  & number of observations \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+Estimation proceeds by ordinary least squares applied to the two inputs jointly.
+Because the design matrix is fixed and the disturbance is homoskedastic with the
+scale given in \cref{tab:params}, the estimator is unbiased and its sampling
+variance has a particularly simple form, which the next section records
+explicitly.

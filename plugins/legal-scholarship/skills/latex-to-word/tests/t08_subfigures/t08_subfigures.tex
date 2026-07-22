@@ -1,0 +1,41 @@
+\documentclass[11pt]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage{graphicx}
+\usepackage{subcaption}
+
+\graphicspath{{figures/}}
+
+\title{Subfigure Stress Case}
+\author{Test Corpus}
+\date{}
+
+\begin{document}
+\maketitle
+
+This test uses the subcaption package with two local raster images. Each
+subfigure has its own caption and label, while the enclosing figure supplies a
+common caption.
+
+\begin{figure}[htbp]
+\centering
+\begin{subfigure}{0.45\linewidth}
+\centering
+\includegraphics[width=\linewidth]{panel_a.png}
+\caption{Increasing series}
+\label{fig:sub-a}
+\end{subfigure}
+\hfill
+\begin{subfigure}{0.45\linewidth}
+\centering
+\includegraphics[width=\linewidth]{panel_b.png}
+\caption{Grouped bars}
+\label{fig:sub-b}
+\end{subfigure}
+\caption{Two panels generated as small PNG files}
+\label{fig:subfigures}
+\end{figure}
+
+The sentence after the figure references the combined display in Figure
+\ref{fig:subfigures}.
+
+\end{document}

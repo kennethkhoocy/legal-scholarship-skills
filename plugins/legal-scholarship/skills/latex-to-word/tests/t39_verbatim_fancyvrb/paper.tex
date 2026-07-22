@@ -1,0 +1,100 @@
+\documentclass[11pt]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{amsmath}
+\usepackage{fancyvrb}
+\usepackage{cleveref}
+
+\title{Verbatim and Fancyvrb Stress Case}
+\author{Test Corpus}
+\date{}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+This fixture exercises code and verbatim rendering beyond the \texttt{lstlisting}
+environment. It combines a plain \texttt{verbatim} block, two \texttt{fancyvrb}
+\texttt{Verbatim} blocks (one framed and line-numbered, one carrying LaTeX
+special characters), and inline \verb|\verb| spans. The goal is to confirm that a
+converter preserves monospaced formatting, literal whitespace, and reserved
+symbols rather than reflowing them as ordinary prose.
+\end{abstract}
+
+\section{Plain Verbatim}
+\label{sec:plain}
+
+The plain \texttt{verbatim} environment reproduces its contents character for
+character, including leading indentation and blank lines. A converter that
+collapses runs of spaces or strips the trailing newline will visibly distort the
+shell session reproduced below, so \cref{sec:plain} serves as the baseline case.
+
+\begin{verbatim}
+$ python analyze.py --window -1,3 --factor ff3
+  loading panel ............ ok (1,284 firm-days)
+  estimating CARs .......... ok
+  writing tables/ .......... done
+\end{verbatim}
+
+Inline monospaced spans must also survive conversion. Use \verb|grep -nE "CAR_ff3"|
+to locate the relevant column, and confirm that the file lives at
+\verb!data/processed/event_panel.parquet! before rerunning the pipeline. The two
+delimiters here, a pipe and an exclamation mark, both mark \verb|\verb| arguments
+and should leave no stray delimiter characters in the output.
+
+\section{Framed and Numbered Verbatim}
+\label{sec:framed}
+
+The \texttt{fancyvrb} package extends verbatim with framing, line numbering, and
+other display options. \Cref{sec:framed} uses \verb|frame=single| together with
+\verb|numbers=left|, so each line carries a number in the left margin and the
+block is enclosed in a rule. These decorations are a common point of fidelity
+loss when source blocks are flattened into paragraphs.
+
+\begin{Verbatim}[frame=single,numbers=left]
+def cumulative_abnormal_return(ar, lo, hi):
+    window = ar[lo:hi + 1]
+    return float(window.sum())
+
+car = cumulative_abnormal_return(ar, -1, 3)
+print(f"CAR(-1,+3) = {car:.4f}")
+\end{Verbatim}
+
+The numbering restarts at one for the block above, and the indentation of the
+function body is significant; a four-space indent that becomes a single space
+would change the apparent structure of the code.
+
+\section{Special Characters Verbatim}
+\label{sec:special}
+
+A verbatim environment must render LaTeX's reserved characters literally rather
+than interpreting them. The block in \cref{sec:special} deliberately packs the
+hash, dollar, percent, ampersand, underscore, and backslash into a few lines so
+that any premature macro expansion or escaping error becomes obvious.
+
+\begin{Verbatim}
+# fields: id & amount (raw)
+total := $price * qty       % running subtotal
+discount_rate = 0.15        # 15% off
+path = C:\data\raw\input.csv
+flags = -x & -y_z \ --keep
+\end{Verbatim}
+
+If the converter were to treat these symbols as markup, the percent signs would
+swallow the rest of their lines, the ampersands would be read as alignment tabs,
+and the backslashes would begin spurious control sequences. Their literal
+survival is the property under test.
+
+\section{Discussion}
+\label{sec:discussion}
+
+The four environments above isolate distinct behaviours: literal whitespace in
+\cref{sec:plain}, marginal decorations in \cref{sec:framed}, and reserved-symbol
+escaping in \cref{sec:special}. A short inline equation, $\sigma^2 = \tfrac{1}{n}
+\sum_i (x_i - \bar{x})^2$, confirms that ordinary mathematics still renders
+normally outside of the verbatim regions. Taken together, these cases probe
+whether code-like content is carried across the conversion as formatted,
+fixed-width text.
+
+\end{document}

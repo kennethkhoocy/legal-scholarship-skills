@@ -1,0 +1,19 @@
+\section{Introduction}
+\label{sec:intro}
+
+This document is deliberately fragmented across several files to test whether a
+converter resolves \verb|\input| directives and reassembles the pieces in the
+correct order. The body text lives entirely in child files under the
+\texttt{parts/} directory; the top-level \texttt{paper.tex} contributes only the
+preamble, the title block, and the three \verb|\input| statements that pull the
+children in. A tool that processes only the main file in isolation would emit a
+title and nothing else, so any faithful output must follow the inclusion graph.
+
+The substantive content is organized so that later sections depend on labels
+introduced earlier. \Cref{sec:methods} defines the estimation procedure and
+presents a parameter table, and \cref{sec:results} reports a closed-form
+expression that the methods section motivates. These forward and backward
+references cross file boundaries, which means cross-reference resolution must
+operate on the merged document rather than on any single fragment. The remainder
+of this introduction simply establishes that prose in the first child renders
+normally alongside the assembled whole.

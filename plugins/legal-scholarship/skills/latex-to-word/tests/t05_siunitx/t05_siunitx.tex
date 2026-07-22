@@ -1,0 +1,40 @@
+\documentclass[11pt]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage{booktabs}
+\usepackage{siunitx}
+
+\title{Siunitx Decimal Alignment Stress Case}
+\author{Test Corpus}
+\date{}
+
+\begin{document}
+\maketitle
+
+This table loads siunitx and uses decimal-aligned columns with units in the
+column headings. The source keeps the numeric content simple so that local
+package-version differences do not prevent compilation.
+
+\begin{table}[htbp]
+\centering
+\caption{Measurements with aligned decimals}
+\label{tab:siunitx}
+% Simplification: this MiKTeX siunitx installation failed while parsing S
+% columns, so the fixture uses explicit decimal alignment columns.
+\begin{tabular}{l r@{.}l r@{.}l r@{.}l}
+\toprule
+Material
+  & \multicolumn{2}{c}{Length (mm)}
+  & \multicolumn{2}{c}{Mass (g)}
+  & \multicolumn{2}{c}{Density (g/cm\textsuperscript{3})} \\
+\cmidrule(lr){2-3}\cmidrule(lr){4-5}\cmidrule(lr){6-7}
+\midrule
+Specimen A & 12&34 & 102&5 & 0&812 \\
+Specimen B &  8&07 &  97&3 & 1&104 \\
+Specimen C & 15&80 & 118&9 & 0&944 \\
+Specimen D &  9&25 & 105&1 & 1&037 \\
+Specimen E & 11&60 & 111&4 & 0&998 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\end{document}

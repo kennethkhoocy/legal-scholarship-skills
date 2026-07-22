@@ -1,0 +1,53 @@
+\documentclass[11pt]{article}
+\usepackage[margin=1in]{geometry}
+
+\title{Nested List Stress Case}
+\author{Test Corpus}
+\date{}
+
+\begin{document}
+\maketitle
+
+This test concentrates on nested itemize, enumerate, and description lists in a
+plain article document.
+
+\section{Protocol Checklist}
+
+\begin{enumerate}
+\item Prepare the source file.
+  \begin{itemize}
+  \item Confirm that the preamble loads only the required packages.
+  \item Record any generated assets beside the source file.
+  \item Keep figure paths relative to the test directory.
+  \end{itemize}
+\item Review the content blocks.
+  \begin{description}
+  \item[Tables] Check captions, labels, and footnotes.
+  \item[Equations] Verify numbering and cross-references.
+  \item[Figures] Confirm that captions remain adjacent to the visual element.
+  \end{description}
+\item Execute the conversion workflow.
+  \begin{enumerate}
+  \item Compile the source with latexmk.
+  \item Convert the same source to Word.
+  \item Render the result to PDF for visual comparison.
+  \end{enumerate}
+\end{enumerate}
+
+\section{Nested Notes}
+
+\begin{itemize}
+\item Outer item with a short explanatory paragraph that wraps over more than one
+line in the source.
+  \begin{enumerate}
+  \item First nested numbered point.
+  \item Second nested numbered point.
+    \begin{description}
+    \item[Scope] The point concerns local conversion behavior.
+    \item[Record] The harness stores output summaries for later inspection.
+    \end{description}
+  \end{enumerate}
+\item Final outer item.
+\end{itemize}
+
+\end{document}

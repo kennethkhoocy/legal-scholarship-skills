@@ -1,0 +1,63 @@
+\documentclass[11pt]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath}
+\usepackage{booktabs}
+\usepackage{tcolorbox}
+
+\title{Tcolorbox Callout Stress Case}
+\author{Test Corpus}
+\date{}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+This fixture tests a framed callout created with \texttt{tcolorbox}. The callout
+contains ordinary prose and an inline equation so that conversion can be checked
+for box geometry, text flow, and mathematical content.
+\end{abstract}
+
+\section{Decision Rule}
+\label{sec:decision-rule}
+
+Many academic appendices use boxed notes to identify assumptions or coding
+decisions. The following callout records a compact rule for a synthetic sample:
+
+\begin{tcolorbox}[
+  title={Coding rule},
+  colback=gray!6,
+  colframe=black!65,
+  boxrule=0.6pt,
+  arc=1mm,
+  left=6pt,
+  right=6pt,
+  top=6pt,
+  bottom=6pt
+]
+A record enters the analytic sample when the eligibility score satisfies
+$e_i \geq 3$ and the follow-up indicator is observed. Records below the threshold
+remain in the tracking file for descriptive reporting.
+\end{tcolorbox}
+
+The paragraph after the callout should return to the normal text width. This
+helps identify whether the box environment leaks spacing or indentation into
+subsequent material.
+
+\begin{table}[htbp]
+\centering
+\caption{Synthetic callout classification}
+\label{tab:callout}
+\begin{tabular}{lcc}
+\toprule
+Classification & Records & Included \\
+\midrule
+Eligible with follow-up & 138 & Yes \\
+Eligible without follow-up & 21 & No \\
+Below eligibility threshold & 46 & No \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+Table~\ref{tab:callout} provides a standard float after the boxed material.
+
+\end{document}

@@ -1,0 +1,64 @@
+\documentclass[11pt]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{array}
+\usepackage{booktabs}
+\usepackage{threeparttable}
+\usepackage[colorlinks=true,linkcolor=blue,citecolor=blue,urlcolor=blue]{hyperref}
+\usepackage[nameinlink,noabbrev]{cleveref}
+
+\title{Table Footnote and Nested Tabular Stress Paper}
+\author{Stage Two Corpus}
+\date{}
+
+\begin{document}
+\maketitle
+
+\section{Purpose}
+
+The table in \cref{tab:nested-footnote} combines three common table features that are easy to flatten during conversion: booktabs rules, a table-specific footnote marker, and a nested tabular environment inside a cell. The nested cell is used to keep parameter names aligned with short descriptions.
+
+\begin{table}[tbp]
+\centering
+\begin{threeparttable}
+\caption{Screening specifications with nested parameter summaries}
+\label{tab:nested-footnote}
+\begin{tabular}{@{}p{0.21\linewidth}p{0.38\linewidth}cc@{}}
+\toprule
+Specification & Parameter block & Holdout accuracy & Flag rate \\
+\midrule
+Baseline\tnote{a} &
+\begin{tabular}{@{}ll@{}}
+$\alpha_1$ & raw score weight \\
+$\alpha_2$ & site adjustment \\
+$\alpha_3$ & calendar effect
+\end{tabular}
+& 0.81 & 12\% \\
+\addlinespace
+Trimmed &
+\begin{tabular}{@{}ll@{}}
+$\beta_1$ & winsorized score \\
+$\beta_2$ & cluster penalty
+\end{tabular}
+& 0.84 & 9\% \\
+\addlinespace
+Hierarchical &
+\begin{tabular}{@{}ll@{}}
+$\gamma_1$ & pooled mean \\
+$\gamma_2$ & unit deviation \\
+$\gamma_3$ & residual scale
+\end{tabular}
+& 0.86 & 7\% \\
+\bottomrule
+\end{tabular}
+\begin{tablenotes}[flushleft]
+\footnotesize
+\item[a] The baseline specification uses the original site labels, so the marker is intentionally attached to a body cell rather than to the caption.
+\end{tablenotes}
+\end{threeparttable}
+\end{table}
+
+The footnote marker in the first row is part of the table object. It should remain visually and semantically connected to the table after conversion, while the nested parameter blocks should preserve line breaks inside their parent cells.
+
+\end{document}

@@ -1,0 +1,170 @@
+\documentclass[11pt]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage[colorlinks=true,linkcolor=blue,citecolor=blue,urlcolor=blue]{hyperref}
+\usepackage[nameinlink,noabbrev]{cleveref}
+
+\title{Advanced Display Mathematics Stress Paper}
+\author{Stage Two Corpus}
+\date{}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+This fixture concentrates the display-mathematics constructs that most often
+break a LaTeX-to-OMML conversion path. It exercises aligned multi-line
+equations with embedded text, manually tagged equations, piecewise
+definitions, several matrix environments, labelled arrows, simultaneous
+overbraces and underbraces, binomial coefficients, fractions, and indexed
+sums. The surrounding prose is written so that a text-difference metric over
+the document body remains meaningful, while the mathematical surface remains
+the primary object under test.
+\end{abstract}
+
+\section{Estimator and Objective}
+\label{sec:objective}
+
+Consider a regression problem in which the parameter vector
+$\theta \in \mathbb{R}^{p}$ is estimated from $n$ paired observations
+$(x_i, y_i)$ with $x_i \in \mathbb{R}^{p}$ and $y_i \in \mathbb{R}$. The
+penalised objective combines a quadratic loss with a ridge term, and we write
+the gradient on a second line so that the alignment marker is exercised
+directly:
+\begin{align}
+L(\theta)
+  &= \sum_{i=1}^{n} \bigl(y_i - x_i^{\top}\theta\bigr)^2
+     + \lambda \lVert \theta \rVert_2^2,
+     && \text{with } \lambda \geq 0, \label{eq:loss}\\
+\nabla L(\theta)
+  &= -2 X^{\top}(y - X\theta) + 2\lambda\theta. \label{eq:grad}
+\end{align}
+The first-order condition obtained by setting \cref{eq:grad} to zero yields the
+closed-form minimiser, which we display with a manual tag rather than an
+automatic number so that the tag-handling branch of the converter is reached:
+\begin{equation}
+\stepcounter{equation}% keep the hyperref anchor distinct from the auto-numbered displays
+\hat{\theta}(\lambda)
+  = \bigl(X^{\top}X + \lambda I_p\bigr)^{-1} X^{\top} y. \tag{$\star$}
+\end{equation}
+The expression in \eqref{eq:loss} reduces to ordinary least squares when
+$\lambda = 0$, in which case the estimator inherits the familiar projection
+geometry of the column space of $X$.
+
+\section{A Piecewise Decision Rule}
+\label{sec:cases}
+
+The fitted parameter induces a classifier through a thresholded score. We write
+the decision rule as a piecewise expression, which forces the converter to map
+a \texttt{cases} environment onto the corresponding stacked structure in the
+target format:
+\begin{equation}
+d(x) =
+\begin{cases}
+1, & \text{if } x^{\top}\hat{\theta} \geq \tau,\\[2pt]
+0, & \text{if } 0 \leq x^{\top}\hat{\theta} < \tau,\\[2pt]
+-1, & \text{otherwise},
+\end{cases}
+\label{eq:cases}
+\end{equation}
+where $\tau$ is a fixed cutoff chosen on held-out data. The middle branch of
+\cref{eq:cases} contains a compound inequality, and the textual annotations
+inside each branch test the preservation of upright text within an otherwise
+mathematical display.
+
+\section{Covariance and Design Matrices}
+\label{sec:matrices}
+
+Two matrix environments appear below. The first is a symmetric correlation
+matrix written with square brackets, and the second is a small design block
+written with round brackets so that both delimiter families are exercised
+within the same section:
+\begin{equation}
+\Sigma =
+\begin{bmatrix}
+1 & \rho & \rho^2\\
+\rho & 1 & \rho\\
+\rho^2 & \rho & 1
+\end{bmatrix},
+\qquad
+B =
+\begin{pmatrix}
+1 & x_{1} & x_{1}^2\\
+1 & x_{2} & x_{2}^2\\
+1 & x_{3} & x_{3}^2
+\end{pmatrix}.
+\label{eq:matpair}
+\end{equation}
+The determinant of the leading principal block is reported through a
+determinant environment, which carries vertical-bar delimiters and a multi-row,
+multi-column body:
+\begin{equation}
+\begin{vmatrix}
+1 & \rho\\
+\rho & 1
+\end{vmatrix}
+= 1 - \rho^2 .
+\label{eq:det}
+\end{equation}
+The matrices in \cref{eq:matpair} and the determinant in \cref{eq:det} share the
+same scalar $\rho$, so a reader can verify the entries against one another.
+
+\section{Annotated Transformations}
+\label{sec:annotated}
+
+Conversion paths frequently mishandle decorations that sit above or below a
+sub-expression. The following display combines a labelled arrow with a
+simultaneous overbrace and underbrace, so that both vertical decorations and the
+arrow annotation are evaluated together:
+\begin{equation}
+\underbrace{X^{\top}X}_{\text{Gram matrix}}
+\;\xrightarrow{\;+\,\lambda I_p\;}\;
+\overbrace{X^{\top}X + \lambda I_p}^{\text{regularised}} .
+\label{eq:arrow}
+\end{equation}
+The transformation in \cref{eq:arrow} is the operation that guarantees
+invertibility for every $\lambda > 0$, because the added diagonal shifts every
+eigenvalue upward by exactly $\lambda$.
+
+\section{Combinatorial and Summation Notation}
+\label{sec:sums}
+
+A final display gathers a binomial coefficient, a nested fraction, and an
+indexed sum into one numbered line so that the converter must place all three
+operators within a single equation body:
+\begin{equation}
+\binom{n}{k}
+= \frac{n!}{k!\,(n-k)!},
+\qquad
+S_n = \sum_{i=1}^{n} \frac{1}{i\,(i+1)}
+    = 1 - \frac{1}{\,n+1\,}.
+\label{eq:binom}
+\end{equation}
+The telescoping identity in \cref{eq:binom} provides a closed form for the
+partial sum, and the binomial coefficient on the left supplies an independent
+combinatorial expression in the same display.
+
+\section{An Inline-Heavy Paragraph}
+\label{sec:inline}
+
+The remaining prose is deliberately dense with inline mathematics so that the
+converter must interleave short formulas with ordinary words at high frequency.
+For a centred predictor the leverage of observation $i$ equals
+$h_{ii} = x_i^{\top}(X^{\top}X)^{-1}x_i$, which satisfies
+$0 \leq h_{ii} \leq 1$ and $\sum_{i=1}^{n} h_{ii} = p$. When $\lambda$ grows the
+effective degrees of freedom
+$\mathrm{df}(\lambda) = \operatorname{tr}\!\bigl[X(X^{\top}X+\lambda I_p)^{-1}X^{\top}\bigr]$
+decrease monotonically from $p$ toward $0$, so the map
+$\lambda \mapsto \mathrm{df}(\lambda)$ is strictly decreasing on
+$(0, \infty)$. A unit increase in the $j$th coordinate of $x$ shifts the score
+by $\hat{\theta}_j$, and the standardised statistic
+$z_j = \hat{\theta}_j / \widehat{\operatorname{se}}(\hat{\theta}_j)$ is compared
+against the quantile $\Phi^{-1}(1-\alpha/2)$ at level $\alpha$. These inline
+fragments, taken together with the numbered displays in
+\cref{sec:objective,sec:cases,sec:matrices,sec:annotated,sec:sums}, give a
+compact but demanding test of mathematical fidelity.
+
+\end{document}

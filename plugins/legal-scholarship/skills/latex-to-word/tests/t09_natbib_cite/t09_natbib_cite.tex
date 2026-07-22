@@ -1,0 +1,48 @@
+\documentclass[11pt]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage{booktabs}
+\usepackage{graphicx}
+\usepackage{natbib}
+
+\graphicspath{{figures/}}
+
+\title{Natbib Citation Stress Case}
+\author{Test Corpus}
+\date{}
+
+\begin{document}
+\maketitle
+
+\citet{angrist2009mostly} describe a research design vocabulary that is widely
+used in applied work. Related discussions emphasize transparent reporting
+\citep{imbens2015causal, wooldridge2010econometric}. This test pairs natbib
+citations with an ordinary figure and a booktabs table.
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.62\linewidth]{citation_plot.png}
+\caption{A generated line plot used by the citation test}
+\label{fig:natbib}
+\end{figure}
+
+\begin{table}[htbp]
+\centering
+\caption{Citation-oriented table}
+\label{tab:natbib}
+\begin{tabular}{lrr}
+\toprule
+Source type & Count & Share \\
+\midrule
+Books & 2 & 0.67 \\
+Articles & 1 & 0.33 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+Figure \ref{fig:natbib} and Table \ref{tab:natbib} provide local cross-reference
+targets in the same document as the bibliography.
+
+\bibliographystyle{plainnat}
+\bibliography{refs}
+
+\end{document}

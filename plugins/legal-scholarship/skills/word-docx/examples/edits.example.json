@@ -1,0 +1,18 @@
+[
+  {
+    "operation": "replace",
+    "paragraph_index": 12,
+    "old_text": "This finding has clear policy implications.",
+    "new_text": "This finding suggests potential policy implications, subject to the data limitations discussed in Section 5.",
+    "author": "LLM",
+    "date": "2026-05-12T00:00:00"
+  },
+  {
+    "operation": "replace",
+    "paragraph_index": 3,
+    "old_text": "existing literature",
+    "new_text": "existing literature on corporate governance and firm performance",
+    "author": "LLM",
+    "date": "2026-05-12T00:00:00"
+  }
+]

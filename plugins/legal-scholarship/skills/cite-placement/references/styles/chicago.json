@@ -1,0 +1,25 @@
+{
+  "style_id": "chicago",
+  "display_name": "Chicago (17th ed., notes-bib)",
+  "short_forms": {
+    "ibid_term": "Ibid.",
+    "ibid_require_sole_citation": true,
+    "ibid_require_immediately_preceding": true,
+    "supra_template": "{signal}{author}, \\textit{{{short_title}}}",
+    "supra_with_short_title_template": "{signal}{author}, \\textit{{{short_title}}}",
+    "hereinafter_template": null,
+    "use_hereinafter": false,
+    "et_al_threshold": 4,
+    "et_al_format": "{first_author} et al.",
+    "two_author_format": "{first_author} and {second_author}"
+  },
+  "signals": [],
+  "merge": {
+    "separator": "; ",
+    "lowercase_signals_after_first": false,
+    "end_punctuation": "."
+  },
+  "llm_prompt_context": {
+    "short_form_description": "Chicago short-form: 'Ibid.' for immediately preceding same source; shortened title for subsequent references (Author, Short Title). No supra convention."
+  }
+}

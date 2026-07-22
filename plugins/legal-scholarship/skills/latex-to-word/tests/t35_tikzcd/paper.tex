@@ -1,0 +1,136 @@
+\documentclass[11pt]{article}
+
+\usepackage[margin=1in]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{tikz-cd}
+\usepackage{cleveref}
+
+\Crefname{figure}{Figure}{Figures}
+\crefname{figure}{Figure}{Figures}
+
+\title{Commutative Diagrams in Homological Algebra:\\ Short Exact Sequences and Pullback Squares}
+\author{A.\ Khoo}
+\date{\today}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+We illustrate two elementary constructions of homological algebra using
+commutative diagrams rendered with the \texttt{tikz-cd} package. The first is the
+defining diagram of a short exact sequence of abelian groups; the second is a
+pullback (fibre product) square together with the triangle that witnesses its
+universal property. The diagrams are drawn entirely by \TeX{} and require no
+external graphics.
+\end{abstract}
+
+\section{Short exact sequences}
+
+Let $\mathcal{A}$ be an abelian category. A sequence of objects and morphisms
+\[
+  0 \longrightarrow A \xrightarrow{\,f\,} B \xrightarrow{\,g\,} C \longrightarrow 0
+\]
+is a \emph{short exact sequence} when $f$ is a monomorphism, $g$ is an
+epimorphism, and $\operatorname{im} f = \ker g$. Exactness at $B$ is the single
+substantive condition; exactness at $A$ and at $C$ records, respectively, that
+$f$ is injective and that $g$ is surjective. We display the same data as a
+commutative diagram in \cref{fig:ses}, where the hooked arrow
+$A \hookrightarrow B$ emphasises that $f$ is a monomorphism and the two-headed
+arrow $B \twoheadrightarrow C$ that $g$ is an epimorphism.
+
+\begin{figure}[ht]
+  \centering
+  \begin{tikzcd}[column sep=large, row sep=large]
+    0 \arrow[r]
+      & A \arrow[r, "f", hook]
+      & B \arrow[r, "g", two heads] \arrow[d, "\pi"']
+      & C \arrow[r]
+      & 0 \\
+    & & B/\operatorname{im} f \arrow[ur, "\bar{g}"', dashed]
+  \end{tikzcd}
+  \caption{A short exact sequence $0 \to A \to B \to C \to 0$. The induced map
+  $\bar{g}\colon B/\operatorname{im} f \to C$ (dashed) is the isomorphism
+  supplied by the first isomorphism theorem, factoring $g$ through the quotient
+  projection $\pi$.}
+  \label{fig:ses}
+\end{figure}
+
+The diagram in \cref{fig:ses} encodes the first isomorphism theorem: because
+$\operatorname{im} f = \ker g$, the epimorphism $g$ descends along the quotient
+projection $\pi\colon B \to B/\operatorname{im} f$ to an isomorphism
+$\bar{g}$ with $g = \bar{g} \circ \pi$. Commutativity of the lower triangle is
+exactly the relation $g = \bar{g}\,\pi$, and the dashed arrow signals that
+$\bar{g}$ is the unique map making that triangle commute.
+
+\section{Pullback squares}
+
+Given morphisms $f\colon X \to Z$ and $g\colon Y \to Z$ with common codomain,
+their \emph{pullback} (or fibre product) is an object $P = X \times_Z Y$ equipped
+with projections $p\colon P \to X$ and $q\colon P \to Y$ satisfying
+$f \circ p = g \circ q$, and universal among all such cones. Set-theoretically,
+\[
+  X \times_Z Y \;=\; \bigl\{\, (x,y) \in X \times Y : f(x) = g(y) \,\bigr\},
+\]
+with $p$ and $q$ the restrictions of the two coordinate projections. The
+commutative square is shown in \cref{fig:pullback}; the small right-angle mark in
+its upper-left corner is the conventional \texttt{tikz-cd} annotation for a
+pullback.
+
+\begin{figure}[ht]
+  \centering
+  \begin{tikzcd}[column sep=large, row sep=large]
+    P \arrow[r, "p"] \arrow[d, "q"'] \arrow[dr, phantom, "\lrcorner", very near start]
+      & X \arrow[d, "f"] \\
+    Y \arrow[r, "g"']
+      & Z
+  \end{tikzcd}
+  \caption{The pullback (fibre product) square $P = X \times_Z Y$, with
+  $f \circ p = g \circ q$. The corner symbol marks the square as cartesian.}
+  \label{fig:pullback}
+\end{figure}
+
+The universal property promised by \cref{fig:pullback} is a statement about a
+triangle. Suppose $W$ is any object carrying maps $a\colon W \to X$ and
+$b\colon W \to Y$ with $f \circ a = g \circ b$. Then there is a unique mediating
+morphism $u\colon W \to P$ through which both $a$ and $b$ factor, so that
+$p \circ u = a$ and $q \circ u = b$. We isolate the mediating triangle for the
+$X$-component in \cref{fig:universal}, where the natural transformation
+$\alpha \Rightarrow \beta$ between the two composite functors
+$W \rightrightarrows X$ is drawn as a two-cell.
+
+\begin{figure}[ht]
+  \centering
+  \begin{tikzcd}[column sep=huge, row sep=large]
+    W \arrow[r, "a"] \arrow[dr, "u"', dashed]
+      \arrow[r, ""{name=U, below}, bend left=40, "a'"]
+      & X \\
+    & P \arrow[u, "p"']
+    \arrow[from=U, to=1-2, Rightarrow, "\alpha", shorten <= 2pt, shorten >= 2pt]
+  \end{tikzcd}
+  \caption{The mediating triangle for the universal property of the pullback:
+  $u\colon W \to P$ is the unique map with $p \circ u = a$. The double arrow
+  $\alpha$ is a two-cell witnessing the comparison $a \Rightarrow a'$ between the
+  two parallel maps $W \rightrightarrows X$.}
+  \label{fig:universal}
+\end{figure}
+
+Taken together, \cref{fig:pullback,fig:universal} characterise the pullback up to
+unique isomorphism: any two objects satisfying the cone condition and the
+universal triangle are canonically isomorphic, since the mediating morphisms
+compose to identities on both sides. This is the categorical content behind the
+familiar set-level formula for $X \times_Z Y$.
+
+\section{Conclusion}
+
+The two examples, a short exact sequence in \cref{fig:ses} and a pullback square
+in \cref{fig:pullback} with its universal triangle in \cref{fig:universal},
+exhibit the principal arrow decorations of \texttt{tikz-cd}: labelled arrows,
+hooked monomorphisms, two-headed epimorphisms, dashed mediating maps, the
+pullback corner, bent arrows, and a two-cell. Each diagram is typeset directly
+from its source, so the figures travel with the document without any external
+image files.
+
+\end{document}

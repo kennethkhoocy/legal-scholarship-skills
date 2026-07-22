@@ -1,0 +1,9 @@
+python-docx>=1.1,<2
+docx2python>=3.0,<4
+docx-revisions>=0.1.5,<1
+docxtpl>=0.18,<1
+lxml>=4.9,<6
+typer>=0.9,<1
+rich>=13.0,<14
+pydantic>=2.0,<3
+pytest>=7.0,<9

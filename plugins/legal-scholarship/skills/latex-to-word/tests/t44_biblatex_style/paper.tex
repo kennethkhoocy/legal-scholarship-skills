@@ -1,0 +1,98 @@
+\documentclass[11pt]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{amsmath}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{multirow}
+\usepackage{csquotes}
+\usepackage[backend=biber,style=authoryear]{biblatex}
+\usepackage{cleveref}
+
+\begin{filecontents}{\jobname.bib}
+@article{angrist2010,
+  author  = {Angrist, Joshua D. and Pischke, J\"{o}rn-Steffen},
+  title   = {The Credibility Revolution in Empirical Economics},
+  journal = {Journal of Economic Perspectives},
+  year    = {2010},
+  volume  = {24},
+  number  = {2},
+  pages   = {3--30},
+}
+
+@book{wooldridge2010,
+  author    = {Wooldridge, Jeffrey M.},
+  title     = {Econometric Analysis of Cross Section and Panel Data},
+  edition   = {2},
+  publisher = {MIT Press},
+  address   = {Cambridge, MA},
+  year      = {2010},
+}
+
+@article{bertrand2004,
+  author  = {Bertrand, Marianne and Duflo, Esther and Mullainathan, Sendhil},
+  title   = {How Much Should We Trust Differences-in-Differences Estimates?},
+  journal = {Quarterly Journal of Economics},
+  year    = {2004},
+  volume  = {119},
+  number  = {1},
+  pages   = {249--275},
+}
+
+@article{cameron2011,
+  author  = {Cameron, A. Colin and Gelbach, Jonah B. and Miller, Douglas L.},
+  title   = {Robust Inference with Multiway Clustering},
+  journal = {Journal of Business and Economic Statistics},
+  year    = {2011},
+  volume  = {29},
+  number  = {2},
+  pages   = {238--249},
+}
+
+@book{greene2018,
+  author    = {Greene, William H.},
+  title     = {Econometric Analysis},
+  edition   = {8},
+  publisher = {Pearson},
+  address   = {New York},
+  year      = {2018},
+}
+\end{filecontents}
+
+\addbibresource{\jobname.bib}
+
+\title{Citation Forms under Biblatex with the Biber Backend}
+\author{Test Corpus}
+\date{}
+
+\begin{document}
+\maketitle
+
+\section{Citation Commands}
+\label{sec:citations}
+
+This fixture exercises the principal citation commands that a biblatex document
+exposes when the author-year style is paired with the biber backend, so that a
+conversion path must resolve each command to its rendered form and assemble the
+reference list from the embedded database. The methodological turn toward
+research designs with credible identification is described by \textcite{angrist2010},
+whose argument frames much of the applied work that follows. Standard panel-data
+estimators and their assumptions are treated at length in a canonical reference
+\parencite{wooldridge2010}, and a specific caution about serial correlation in
+the difference-in-differences setting appears at \parencite[15]{bertrand2004},
+where the page-prefixed form points the reader to the relevant discussion.
+
+Inference under clustering supplies a second cluster of references. Multiway
+clustering is developed by \autocite{cameron2011}, and a broad textbook account
+of the surrounding estimation theory is available as well \autocite{greene2018}.
+When several sources speak to the same point, a multi-key parenthetical collects
+them in a single call \parencite{wooldridge2010,greene2018}, which the
+author-year style sorts and compresses according to its own rules. \Cref{sec:citations}
+therefore combines textual, parenthetical, page-qualified, and multi-key forms in
+adjacent sentences, so that any one of them failing to resolve would be visible
+in the rendered output.
+
+\printbibliography
+
+\end{document}

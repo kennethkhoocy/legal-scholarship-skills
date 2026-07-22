@@ -1,0 +1,102 @@
+\documentclass[11pt]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{amsmath}
+\usepackage{booktabs}
+\usepackage{xcolor}
+\usepackage[colorlinks=true,linkcolor=blue,citecolor=blue,urlcolor=blue]{hyperref}
+\usepackage[nameinlink,noabbrev]{cleveref}
+
+\title{Hyperlinks, URLs, and Colored Text Stress Case}
+\author{Test Corpus}
+\date{}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+This fixture exercises hyperlinked text produced by \texttt{hyperref} with
+\texttt{colorlinks} enabled, bare URL rendering, named external links, inline
+colored spans created with \texttt{xcolor}, a highlighted span produced with
+\verb|\colorbox|, and a footnote whose body contains an external hyperlink. It
+also checks internal cross-references resolved through \texttt{cleveref} and
+\verb|\nameref|. The prose is ordinary enough that a text-difference comparison
+of the converted document remains informative.
+\end{abstract}
+
+\section{Introduction}
+\label{sec:introduction}
+
+Document conversion has to preserve both the visible anchor text of a link and
+its underlying target. The opening section links to an external project page,
+\href{https://example.org}{the project home page}, and also shows a bare
+address that should be rendered verbatim and remain clickable:
+\url{https://example.org/path/to/resource}. Color is used for emphasis rather
+than for meaning, so the phrase \textcolor{red}{flagged for review} appears in
+red and the phrase \textcolor{blue}{confirmed in the second pass} appears in
+blue. A short highlighted span, \colorbox{yellow}{retained verbatim}, marks
+text that an editor wanted to keep without alteration.
+
+The introduction also includes a footnote whose body carries its own external
+hyperlink, so that link handling can be checked inside the note
+apparatus.\footnote{The reference implementation is archived at
+\href{https://example.org/archive}{the archive entry}, which mirrors the
+material discussed in the main text.} The remainder of the paper is organized as
+follows. \Cref{sec:methods} describes the construction of the example, and
+\cref{sec:results} reports a small summary table. The methods section is titled
+``\nameref{sec:methods}'', and the results section is titled
+``\nameref{sec:results}''.
+
+\section{Methods}
+\label{sec:methods}
+
+The synthetic example is built from a fixed list of records, each tagged with a
+status that determines its display color. Forward and backward references are
+included so that the converter must resolve labels in both directions:
+\cref{sec:introduction} introduces the link forms, while \cref{sec:results}
+below presents the tabulated outcome. An additional external link points to a
+specification document, \href{https://example.org/spec}{the format
+specification}, which is cited again in the discussion. Bare addresses such as
+\url{https://example.org/methods} are interspersed with named links so that both
+rendering paths are exercised within a single paragraph.
+
+\section{Results}
+\label{sec:results}
+
+\Cref{tab:status} summarizes the record statuses. One cell uses an inline color
+command so that colored text inside a table can be distinguished from colored
+text in ordinary prose. The accompanying anchor in the final column is a named
+external link rather than a bare address.
+
+\begin{table}[htbp]
+\centering
+\caption{Record statuses with one colored cell and a named external link.}
+\label{tab:status}
+\begin{tabular}{lll}
+\toprule
+Record & Status & Reference \\
+\midrule
+R-001 & \textcolor{red}{Flagged}  & \href{https://example.org/r001}{detail page} \\
+R-002 & Confirmed                 & \href{https://example.org/r002}{detail page} \\
+R-003 & Confirmed                 & \href{https://example.org/r003}{detail page} \\
+R-004 & Pending                   & \url{https://example.org/r004} \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\section{Discussion}
+\label{sec:discussion}
+
+The example combines several link and color constructs that frequently require
+special handling in Word output. Colored prose produced with \verb|\textcolor|,
+the highlighted span produced with \verb|\colorbox|, the bare URL produced with
+\verb|\url|, and the named links produced with \verb|\href| all appear in the
+same short document, alongside a footnote that itself contains a hyperlink. The
+internal references resolved by \verb|\cref|, \verb|\Cref|, and \verb|\nameref|
+close the document by pointing back to \cref{sec:methods} and
+\cref{tab:status}, while the format specification referenced earlier,
+\href{https://example.org/spec}{the format specification}, demonstrates a link
+target that appears more than once.
+
+\end{document}
