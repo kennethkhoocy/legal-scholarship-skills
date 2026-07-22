@@ -23,12 +23,16 @@ contents.
 Do **not** use it for `.tex` → PDF (use a LaTeX toolchain) or for `.docx` work
 (use a Word/LaTeX conversion skill).
 
-## How it triggers in Claude Code
+## Installation and activation
 
-This skill auto-activates when a task matches the phrases and document types
-above. In practice Claude Code runs the bundled `md2pdf.py` script on your
-Markdown file and reports the verification result. You can also run the script
-yourself (see below).
+Copy the `markdown-to-pdf` folder to `~/.claude/skills/` for Claude Code or
+`~/.agents/skills/` for Codex, then restart the host or start a new session.
+
+This skill auto-activates in either host when a task matches the phrases and
+document types above. You can also invoke it explicitly with `/markdown-to-pdf`
+in Claude Code or `$markdown-to-pdf` in Codex. The host runs the bundled
+`md2pdf.py` script on your Markdown file and reports the verification result;
+you can also run the script yourself (see below).
 
 ## The pipeline
 

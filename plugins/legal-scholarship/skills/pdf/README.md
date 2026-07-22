@@ -4,10 +4,20 @@ One auto-triggered entry point for all PDF work: reading/extraction, OCR, and ma
 
 ## Installation
 
-Place this skill in your Claude skills directory — the folder **must** be named `pdf` (the skill name), so clone or copy it to that target:
+Clone the containing repository, then copy this skill into your host's skills
+directory. The installed folder **must** be named `pdf` so that `SKILL.md` is at
+the expected top level:
 
 ```bash
-git clone <repository-url> ~/.claude/skills/pdf
+git clone https://github.com/kennethkhoocy/legal-scholarship-skills
+
+# Claude Code:
+mkdir -p ~/.claude/skills
+cp -R legal-scholarship-skills/plugins/legal-scholarship/skills/pdf ~/.claude/skills/pdf
+
+# Codex:
+mkdir -p ~/.agents/skills
+cp -R legal-scholarship-skills/plugins/legal-scholarship/skills/pdf ~/.agents/skills/pdf
 ```
 
 Install the Python dependencies:
@@ -30,13 +40,17 @@ Optional extras:
   (`Scripts` → `bin` on Linux/macOS.) Model weights (~2.5 GB) auto-download from Hugging Face on first run. Only the scanned/photographed path uses it; everything else is CPU. If the venv is missing, `lightonocr_run.py` aborts with these setup instructions.
 - **OCR fallback (dolphin v2)** — fully optional. Install Dolphin separately at `~/Dolphin` (or point `DOLPHIN_DIR` at it) plus ~7.5 GB free VRAM. Used only when LightOnOCR is unavailable or for its element/layout modes. Without either GPU backend, the CPU fallback is opendataloader-pdf or pytesseract + pdf2image — the rest of the skill is unaffected.
 
-Verify the install:
+Set the skill root for the host you use, then verify the install:
 
 ```bash
-python -m pytest ~/.claude/skills/pdf/tests/ -q   # expect: 216 passed
+PDF_SKILL_ROOT=~/.claude/skills/pdf  # Claude Code
+# PDF_SKILL_ROOT=~/.agents/skills/pdf  # Codex
+python -m pytest "$PDF_SKILL_ROOT/tests/" -q   # expect: 216 passed
 ```
 
-Claude Code auto-discovers the skill on next launch — no manifest edit needed.
+Claude Code and Codex discover the skill on the next launch or new session — no
+manifest edit is needed. It auto-activates for PDF work; explicit invocation is
+`/pdf` in Claude Code or `$pdf` in Codex.
 
 ## How it works
 
@@ -48,14 +62,14 @@ Claude Code auto-discovers the skill on next launch — no manifest edit needed.
 
 ```bash
 # 1. Probe (always first) — returns JSON: classification, densities, recommended_backend
-python ~/.claude/skills/pdf/scripts/probe_pdf.py input.pdf > probe.json
+python "$PDF_SKILL_ROOT/scripts/probe_pdf.py" input.pdf > probe.json
 
 # 2. Route on the result. Example: an academic paper (born_digital_footnotes)
-python ~/.claude/skills/pdf/scripts/docling_extract.py input.pdf -o out.md
-python ~/.claude/skills/pdf/scripts/sanitize_math.py out.md --in-place
+python "$PDF_SKILL_ROOT/scripts/docling_extract.py" input.pdf -o out.md
+python "$PDF_SKILL_ROOT/scripts/sanitize_math.py" out.md --in-place
 
 # 3. Gate the output before trusting it
-python ~/.claude/skills/pdf/scripts/verify_extraction.py out.md --probe probe.json
+python "$PDF_SKILL_ROOT/scripts/verify_extraction.py" out.md --probe probe.json
 ```
 
 ### Routing table
